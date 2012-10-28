@@ -1,0 +1,1062 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Drupal kattintgatás nélkül]]></title>
+  <link href="http://ilo.hu/atom.xml" rel="self"/>
+  <link href="http://ilo.hu/"/>
+  <updated>2012-10-28T21:18:07+01:00</updated>
+  <id>http://ilo.hu/</id>
+  <author>
+    <name><![CDATA[York]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Első drupal contrib patch amit irtam]]></title>
+    <link href="http://ilo.hu/elso-drupal-contrib-patch-amit-irtam/"/>
+    <updated>2010-09-09T15:57:00+02:00</updated>
+    <id>http://ilo.hu/elso-drupal-contrib-patch-amit-irtam</id>
+    <content type="html"><![CDATA[<p>A webform2pdf modulnál már gondot okozott, hogy nem tudtam a webform modul eredmények oldalára saját műveletet beszúrni, de ott meg tudtam kerülni egy saját menüvel. Bíztam benne, hogy az új (3.x) webform modulban lesz változás ezen a téren, hat nem lett :).
+Közben készül egy másik modul is ami a webform modulra épül és itt már nem tudtam megkerülni azt, hogy ne épüljek be a műveletek közé ezért nyitottam egy issuet (<a href="http://drupal.org/node/893090">http://drupal.org/node/893090</a>) és meg is oldottam, majd a modul karbantartója be is kommitolta :).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Time Machine Samba megosztásra mentsen Snow Leopard alatt]]></title>
+    <link href="http://ilo.hu/time-machine-samba-megosztasra-mentsen-snow-leopard-alatt/"/>
+    <updated>2010-09-09T10:42:00+02:00</updated>
+    <id>http://ilo.hu/time-machine-samba-megosztasra-mentsen-snow-leopard-alatt</id>
+    <content type="html"><![CDATA[<p>A napokban vettem egy <a href="http://www.edimax.eu/en/produce_detail.php?pd_id=268&amp;pl1_id=24&amp;pl2_id=91">Edimax NS-2502</a> NAS-t került bele két darab 1TB merevlemez, amit RAID 1-be van kötve.</p>
+
+<p>Hálózati megosztáson keresztül rápakoltam azokat az adatokat amik nekem kellenek, majd ezután jött az ötlet, hogy használjuk Time Machine mentések tárolására.</p>
+
+<!-- more -->
+
+
+<p>Egy kis <a href="http://www.google.hu/search?hl=hu&amp;q=snow+leopard+time+machine+samba">google</a> után sikerült is találni több jó leírást ami ezzel foglalkozott:</p>
+
+<ul>
+<li><a href="http://www.codelathe.com/blog/index.php/2010/03/06/apple-time-machine-tonidoplug-the-match-made-in-heaven">http://www.codelathe.com/blog/index.php/2010/03/06/apple-time-machine-tonidoplug-the-match-made-in-heaven</a></li>
+<li><a href="http://www.codelathe.com/blog/index.php/2010/03/06/apple-time-machine-tonidoplug-the-match-made-in-heaven">http://www.codelathe.com/blog/index.php/2010/03/06/apple-time-machine-tonidoplug-the-match-made-in-heaven</a></li>
+<li><a href="http://www.jordanpeterson.me/node/118">http://www.jordanpeterson.me/node/118</a></li>
+<li><a href="http://www.insanelymac.com/forum/index.php?showtopic=184462">http://www.insanelymac.com/forum/index.php?showtopic=184462</a></li>
+</ul>
+
+
+<p>Én a következőt csináltam Finder segítségével felcsatoltam a távoli megosztást, nalam backup névre hallgat.
+Ezután indítottam egy terminált, majd kiadtam az alábbi parancsot:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>defaults write com.apple.systempreferences TMShowUnsupportedNetworkVolumes 1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Létrehoztam a /tmp könyvtárba egy backup könyvtárat és ide hoztam létre a Time Machine imaget.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir /tmp/backup
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/backup
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Letöltöttem a makeImage.sh scriptet ami létre hozza a megfelelő méretű partíciót. Meg kell adni paraméterben a lemez méretét (én 320GB-ot szánok erre) és a felcsatolt megosztast helyét (nalam a /Volumes/backup könyvtár).</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget http://mikestaszel.com/files/tonido/makeImage.sh
+</span><span class='line'><span class="nv">$ </span>./sh makeImage.sh 320 /Volumes/backup
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A parancs futtatása közben hibaüzeneteket kaptam, de a végeredmény jó lett. Íme a kapott (hiba)üzenetek:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>service: This command still works, but it is deprecated. Please use launchctl(8) instead.
+</span><span class='line'>service: This command still works, but it is deprecated. Please use launchctl(8) instead.
+</span><span class='line'>service: This command still works, but it is deprecated. Please use launchctl(8) instead.
+</span><span class='line'>Generating disk image MyMAC.sparsebundle with size 320GB ... Ignore errors any errors as it should work anyway ...done!
+</span><span class='line'>Generating property list file with uuid A2BB49BB-7736-52F4-8E9E-8F5947322F8F ... done!
+</span><span class='line'>Copying MyMAC.sparsebundle to /Volumes/backup/ ...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A MyMAC helyett a számítógépünk neve fog szerepelni.
+A script a létrehozott MyMAC.sparsebundle könyvtárat a /Volumes/backup/ könyvtárba másolja. Ha valamilyen ok miatt ezt újra szeretnénk másolni, akkor az alábbi paranccsal tehetjuk meg.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/backup
+</span><span class='line'><span class="nv">$ </span>cp -pfr MyMAC.sparsebundle /Volumes/backup/MyMAC.sparsebundle
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Itt vagyunk a célegyenesben, kapcsoljuk be a Time Machinet és válaszuk ki a lemezt.
+Ha sikeresen lement a mentes töröljük a /tmp/backup könyvtárat.</p>
+
+<p>Zárójelben jegyzem meg, hogy nálam volt valami gubanc, mert 8-20GB mentése után valamiért megállt és nem volt hajlandó tovább lépni. Én egy olyan trükköt csináltam, hogy egy szimbolikus linket hoztam létre a távoli meghajtón, ami a /tmp/backup konyvtárban található lemezre mutatott (épp volt annyi helyem, hogy ráférjen a mentés), így erre készült el a mentés teljes mentés, miután ez sikeres volt felmásoltam a megosztásra, így már a következő mentés szépen lefutott.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/backup
+</span><span class='line'><span class="nv">$ </span>ln -s MyMAC.sparsebundle /Volumes/backup/MyMAC.sparsebundle
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Files:</strong></p>
+
+<ul>
+<li><a href="http://ilo.hu/files/makeImage.sh">makeImage.sh</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Drupal modul készítése egyszerű]]></title>
+    <link href="http://ilo.hu/drupal-modul-keszitese-egyszeru/"/>
+    <updated>2010-08-30T11:47:00+02:00</updated>
+    <id>http://ilo.hu/drupal-modul-keszitese-egyszeru</id>
+    <content type="html"><![CDATA[<p>A minap azt javasoltam a <a href="http://drupal.hu">drupal.hu</a> fórumán egy kérdezőnek, hogy amit meg akar valósítani azt ne a smink rétegbe tegye hanem írjon rá egy modult, remélem megfogadta a tanacsom. Ezt a kijelentésemet a minap <a href="http://drupal.hu/tagok/aboros">aboros</a> vágta a fejemhez. Ezért úgy döntöttem, hogy bemutatom mennyire nehéz dolog egy drupal modult elkészíteni.
+Az angol nyelvű modul fejlesztési dokumentációt itt találjátok: <a href="http://drupal.org/developing/modules">http://drupal.org/developing/modules</a>
+A modul készítésről itt írnak: <a href="http://drupal.org/node/231276">http://drupal.org/node/231276</a>.</p>
+
+<!-- more -->
+
+
+<p>Egy oldal elkészítése során sok apró csiszolást kell elvégezni, hogy a drupal pont úgy működjön ahogy azt szeretnénk.
+Ezeket a módosításokat célszerű egy a honlap nevével fémjelzet modulba tenni.
+A most következő példában egy ilyen modul elkészítését mutatom meg a mysite nevű modult fogjuk elkészíteni, és a modul minden oldal letöltéskor egy üzenetet fog megjeleníteni.</p>
+
+<p>A drupalban a modulok neve csak olyan karaktereket tartalmazhat, ami egy PHP függvény nevében is megadható, mivel a modul neve minden modulban létrehozott függvény nevében szerepelni fog.</p>
+
+<p>A feltelepített drupal sites/all/modules alkönyvtárába hozzuk létre a mysite könyvtárat.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /var/www/drupal/
+</span><span class='line'>mkdir -p sites/all/modules/mysite
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A modul létrehozásához minimum két állomány szükséges egy mysite.info és egy mysite.module, ha szeretnénk a modul telepítésekor műveleteket végezni, akkor szükségünk lesz egy mysite.install állományra is (nekünk most nem kell).
+Létrehozzuk mindegyik állományt. Kezdjük a mysite.info állománnyal, ennek a tartalma a következő legyen:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">name</span> <span class="o">=</span> mysite
+</span><span class='line'><span class="nv">description</span> <span class="o">=</span> A mysite oldalon végzett módosításokat tartalmazza.
+</span><span class='line'><span class="nv">core</span> <span class="o">=</span> 7.x
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A name a modul neve, a description a modul leírását tartalmazza, ezeket az értékeket kötelező megadni, de az info állományba megadhatunk még modul függőséget php és drupal verziót, az alábbi oldalon megtaláljuk a többi lehetőséget is: <a href="http://drupal.org/node/231036">http://drupal.org/node/231036</a>
+A core opció a drupal verziót határozza meg, ha 6-os drupalhoz készítjük a 7.x-et 6.x-re cseréljük.</p>
+
+<p>Az info állomány elkészítése után a mysite.module állományunkat kell elkészíteni.
+Az állomány tartalma legyen a következő:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="sd">/**</span>
+</span><span class='line'><span class="sd"> * hook_init() implementálása</span>
+</span><span class='line'><span class="sd"> */</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">mysite_init</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">drupal_set_message</span><span class="p">(</span><span class="nx">t</span><span class="p">(</span><span class="s1">&#39;New message&#39;</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A module állományban a <a href="http://api.drupal.org/api/function/hook_init/6">hook_init</a> hurkot implementáltuk. A szöveg kiíratására pedig a <a href="http://api.drupal.org/api/function/drupal_set_message/6">drupal_set_message()</a> függvény segítségével történt. A <a href="http://api.drupal.org/api/function/t/6">t()</a> függvény fordítja le a szöveget az oldal nyelvére.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[LDAP avagy a hosszú élet ritka]]></title>
+    <link href="http://ilo.hu/ldap-avagy-a-hosszu-elet-ritka/"/>
+    <updated>2010-01-26T12:33:41+01:00</updated>
+    <id>http://ilo.hu/ldap-avagy-a-hosszu-elet-ritka</id>
+    <content type="html"><![CDATA[<p>A feladata egyszerű telepítsünk LDAP szervert, hozzunk létre benne néhány felhasználót és csoportot. Most csak a telepítésről fogok írni, mert nem az olyan simán, mint azt vártam.</p>
+
+<p>A rendszer ubuntu 9.10, amiben 2.4.x verziójú LDAP szerver található.</p>
+
+<h2>Telepítés</h2>
+
+<p>A telepítéshez találtam egy jó kis dokumentációt az ubuntu oldalán:
+<a href="http://sugo.ubuntu.hu/9.04/html/serverguide/hu/openldap-server.html">http://sugo.ubuntu.hu/9.04/html/serverguide/hu/openldap-server.html</a></p>
+
+<!-- more -->
+
+
+<p>Adjuk ki a következő parancsot:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install slapd ldap-utils
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Minden kérdés nélkül feltelepül az openldap szerver. Ez itt már gyanús volt, nem kért adminisztrátor jelszót. Igaz máshol már olvastam, hogy ezt a konfigurációs állományba kell beírni.
+No para, irány az /etc/ldap/ könyvtár és írjuk be a jelszót a slapd.conf állományba. Az első meglepetés itt ért, nincs slapd.conf, csak slapd.d könyvtár. A LDAP szerver 2.4 verziójától kezdve az LDAP szerver konfigurációját is LDAP-ban tárolja. Természetesen lehetőség van a régi konfiguráció szerint is használni a rendszert, de ha itt az új, akkor használjuk azt.</p>
+
+<h2>Én vagyok a főnök?</h2>
+
+<p>Miután átnéztem a fenti dokumentációt és abban nem találtam a megoldást az adminisztrátor jelszó megadására, még adtam egy esélyt a csomaggal érkező dokumentációnak is, de itt sem volt leírva, hogy leszek én a főnök. Ezután jött a google :), simogattam a lámpást mire a megfelelő oldalt megtalálta nekem íme:
+<a href="http://ubuntuforums.org/showthread.php?t=1343931">http://ubuntuforums.org/showthread.php?t=1343931</a></p>
+
+<p>Ezen az oldalon található a következő script amit lefuttatva elkészíti nekünk az adminisztrátor felhasználót és még néhány alapvető sémát is hozzáad a szerverhez, valamint egy kezdő ágat is létrehoz.
+A script:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/cosine.ldif;<span class="se">\</span>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/inetorgperson.ldif;<span class="se">\</span>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/nis.ldif
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;insert your domain name (ex: dc=home,dc=com): &#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">read</span> -e domain
+</span><span class='line'>
+</span><span class='line'><span class="nv">passChecked</span><span class="o">=</span>0
+</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nv">$passChecked</span> -eq 0 <span class="o">]</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;insert password for user admin:&quot;</span>
+</span><span class='line'><span class="nb">read</span> -es pass
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;repeat password for user admin:&quot;</span>
+</span><span class='line'><span class="nb">read</span> -es passControl
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$pass</span>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$passControl</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$pass</span> <span class="o">=</span> <span class="nv">$passControl</span> <span class="o">]</span>;<span class="k">then</span>
+</span><span class='line'><span class="nv">passChecked</span><span class="o">=</span>1
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;passwords don&#39;t match&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;################################################# ##########</span>
+</span><span class='line'><span class="s2"># DATABASE SETUP</span>
+</span><span class='line'><span class="s2">################################################## #########</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2"># Load modules for database type</span>
+</span><span class='line'><span class="s2">dn: cn=module{0},cn=config</span>
+</span><span class='line'><span class="s2">objectClass: olcModuleList</span>
+</span><span class='line'><span class="s2">cn: module{0}</span>
+</span><span class='line'><span class="s2">olcModulePath: /usr/lib/ldap</span>
+</span><span class='line'><span class="s2">olcModuleLoad: {0}back_hdb</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2"># Create directory database</span>
+</span><span class='line'><span class="s2">dn: olcDatabase={1}hdb,cn=config</span>
+</span><span class='line'><span class="s2">objectClass: olcDatabaseConfig</span>
+</span><span class='line'><span class="s2">objectClass: olcHdbConfig</span>
+</span><span class='line'><span class="s2">olcDatabase: {1}hdb</span>
+</span><span class='line'><span class="s2">olcDbDirectory: /var/lib/ldap</span>
+</span><span class='line'><span class="s2">olcSuffix: $domain</span>
+</span><span class='line'><span class="s2">olcRootDN: cn=admin,$domain</span>
+</span><span class='line'><span class="s2">olcRootPW: $pass</span>
+</span><span class='line'><span class="s2">olcAccess: {0}to attrs=userPassword,shadowLastChange by dn=\&quot;cn=admin,$domain\&quot; write by anonymous auth by self write by * none</span>
+</span><span class='line'><span class="s2">olcAccess: {1}to dn.base=&quot;&quot; by * read</span>
+</span><span class='line'><span class="s2">olcAccess: {2}to * by dn=\&quot;cn=admin,$domain\&quot; write by * read</span>
+</span><span class='line'><span class="s2">olcLastMod: TRUE</span>
+</span><span class='line'><span class="s2">olcDbCheckpoint: 512 30</span>
+</span><span class='line'><span class="s2">olcDbConfig: {0}set_cachesize 0 2097152 0</span>
+</span><span class='line'><span class="s2">olcDbConfig: {1}set_lk_max_objects 1500</span>
+</span><span class='line'><span class="s2">olcDbConfig: {2}set_lk_max_locks 1500</span>
+</span><span class='line'><span class="s2">olcDbConfig: {3}set_lk_max_lockers 1500</span>
+</span><span class='line'><span class="s2">olcDbIndex: uid pres,eq</span>
+</span><span class='line'><span class="s2">olcDbIndex: cn,sn,mail pres,eq,approx,sub</span>
+</span><span class='line'><span class="s2">olcDbIndex: objectClass eq</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="s2">################################################## #########</span>
+</span><span class='line'><span class="s2"># DEFAULTS MODIFICATION</span>
+</span><span class='line'><span class="s2">################################################## #########</span>
+</span><span class='line'><span class="s2"># Some of the defaults need to be modified in order to allow</span>
+</span><span class='line'><span class="s2"># remote access to the LDAP config. Otherwise only root</span>
+</span><span class='line'><span class="s2"># will have administrative access.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">dn: cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">delete: olcAuthzRegexp</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">dn: olcDatabase={-1}frontend,cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">delete: olcAccess</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">dn: olcDatabase={0}config,cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">add: olcRootPW</span>
+</span><span class='line'><span class="s2">olcRootPW: `slappasswd -s $pass`</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">dn: olcDatabase={0}config,cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">delete: olcAccess&quot;</span> &gt; conf.ldif
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f conf.ldif
+</span><span class='line'>
+</span><span class='line'><span class="nv">domainmod</span><span class="o">=(</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$domain</span> | sed -e <span class="s2">&quot;s/\,//g&quot;</span><span class="sb">`</span><span class="o">)</span>
+</span><span class='line'><span class="nv">domainmod</span><span class="o">=(</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$domainmod</span> | sed -e <span class="s2">&quot;s/\dc//g&quot;</span><span class="sb">`</span><span class="o">)</span>
+</span><span class='line'><span class="nv">domainarray</span><span class="o">=(</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$domainmod</span> | tr <span class="s1">&#39;=&#39;</span> <span class="s1">&#39; &#39;</span><span class="sb">`</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;# Tree root</span>
+</span><span class='line'><span class="s2">dn: $domain</span>
+</span><span class='line'><span class="s2">objectClass: dcObject</span>
+</span><span class='line'><span class="s2">objectclass: organization</span>
+</span><span class='line'><span class="s2">o: ${domainarray[0]}.${domainarray[1]}</span>
+</span><span class='line'><span class="s2">dc: ${domainarray[0]}</span>
+</span><span class='line'><span class="s2">description: Tree root</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2"># LDAP admin</span>
+</span><span class='line'><span class="s2">dn: cn=admin,$domain</span>
+</span><span class='line'><span class="s2">objectClass: simpleSecurityObject</span>
+</span><span class='line'><span class="s2">objectClass: organizationalRole</span>
+</span><span class='line'><span class="s2">cn: admin</span>
+</span><span class='line'><span class="s2">userPassword: $pass</span>
+</span><span class='line'><span class="s2">description: LDAP administrator&quot;</span> &gt; base.ldif
+</span><span class='line'>
+</span><span class='line'>ldapadd -x -D <span class="nv">cn</span><span class="o">=</span>admin,<span class="nv">$domain</span> -W -f base.ldif
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A kedvenc szövegszerkesztőnk segítségével hozzunk létre egy állományt a fenti tartalommal, majd adjunk rá futtatás jogot és a sudo segítségével futtassuk le.</p>
+
+<h3>FIGYELEM! Ezt csak egyszer futtassuk le!</h3>
+
+<p>Meg fogja kérdezni tőlünk az adminisztrátor jelszót és azt az ágat amit létre szeretnénk hozni. Adjuk meg az adatokat és már kész is vagyunk. Én itt még csináltam egy LDAP szerver újraindítást a biztonság kedvéért.</p>
+
+<h2>A főnök én vagyok!</h2>
+
+<p>Most már sikerült belépni admin felhasználóval az LDAP szerverre.
+Az örök rejtély számomra, hogy ezt miért nem végzi el helyettem a telepítő, vagy miért nincs a csomag dokumentációjában leírva a kezdőlépéseknél.</p>
+
+<p>A következő kliens programot használtam hozzá:
+<a href="http://sourceforge.net/projects/jxplorer/">http://sourceforge.net/projects/jxplorer/</a></p>
+
+<p>Kiegészítés:
+Ha a fenti módszer nem működne akkor nézd meg ezt a leírást:
+<a href="http://ubuntuforums.org/showpost.php?p=8161118&amp;postcount=6">http://ubuntuforums.org/showpost.php?p=8161118&amp;postcount=6</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Állomány feltöltés saját formon]]></title>
+    <link href="http://ilo.hu/allomany-feltoltes-sajat-formon/"/>
+    <updated>2009-12-21T19:18:38+01:00</updated>
+    <id>http://ilo.hu/allomany-feltoltes-sajat-formon</id>
+    <content type="html"><![CDATA[<p>A minap a webform2pdf drupal 6-os modulom drupal 5-ös átiratát készítettem, amikor belefutottam az állomány feltöltés problémájába, hogy is kell állományt feltölteni drupal 5-tel?
+Az ötös Drupal kimaradt az életemből, így nem sok tapasztalatom van vele, valahogy úgy alakult, hogy a 4.7.x után nekem a 6-os Drupal jött.
+Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a href="#drupal_5">drupal 5</a>-tel, majd nézzük meg, hogy változott meg ez <a href="#drupal_6">drupal 6</a>-ra.</p>
+
+<!-- more -->
+
+
+<h2><a name="drupal_5">Drupal 5</a></h2>
+
+<p>Form függvényünkben most csak egy állományt fogunk feltölteni:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form() {</span>
+</span><span class='line'><span class="x">  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
+</span><span class='line'><span class="x">  $form[&#39;#attributes&#39;] = array(</span>
+</span><span class='line'><span class="x">    &#39;enctype&#39; =&gt; &quot;multipart/form-data&quot;</span>
+</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  $form[&#39;file_upload&#39;] = array(</span>
+</span><span class='line'><span class="x">    &#39;#type&#39; =&gt; &#39;file&#39;,</span>
+</span><span class='line'><span class="x">    &#39;#title&#39; =&gt; t(&#39;Filename&#39;),</span>
+</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  $form[&#39;submit&#39;] = array(</span>
+</span><span class='line'><span class="x">    &#39;#type&#39; =&gt; &#39;submit&#39;,</span>
+</span><span class='line'><span class="x">    &#39;#value&#39; =&gt; t(&#39;Upload file&#39;),</span>
+</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  return $form;</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
+</span><span class='line'><span class="x">  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
+</span><span class='line'><span class="x">  $file = file_check_upload(&#39;file_upload&#39;);</span>
+</span><span class='line'><span class="x">  if ($file){</span>
+</span><span class='line'><span class="x">    // Ha sikeres volt elmentjük az állományt a megadott könyvtárba</span>
+</span><span class='line'><span class="x">    $file = file_save_upload($file, &#39;cél_könyvtár_útvonala&#39;);</span>
+</span><span class='line'><span class="x">  }</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Eddig sétagalopp, a neheze akkor jön amikor valamilyen feltételnek megfelelő állományt szeretnénk, ha feltöltene a felhasználó. A példában várjunk egy képet, ami nem nagyobb mint 100x100 pixel, ha nagyobb méretezzük át.</p>
+
+<p>A validációban megvizsgáljuk, hogy kép típusú-e az állomány, az átméretezést pedig megcsináljuk a sumbitkor.</p>
+
+<p>A form előállítása változatlan. Az feltöltött állomány vizsgálatát a form validate függvényben végezzük el. A submit függvényben a képet átméretezzük, ha nagyobb mint a megengedett, majd elmentjük a megadott könyvtárba.
+Validate függvény:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_validate($form_id, $form_values) {</span>
+</span><span class='line'><span class="x">  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
+</span><span class='line'><span class="x">  $file = file_check_upload(&#39;file_upload&#39;);</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  // Létezik-e a feltöltött állomány</span>
+</span><span class='line'><span class="x">  if ( isset($file-&gt;filepath) ) {</span>
+</span><span class='line'><span class="x">    // Megnézzük, hogy kép-e</span>
+</span><span class='line'><span class="x">    $info = image_get_info($file-&gt;filepath);</span>
+</span><span class='line'><span class="x">    if (!$info || !$info[&#39;extension&#39;]) {</span>
+</span><span class='line'><span class="x">      form_set_error(&#39;file_upload&#39;, t(&#39;The uploaded file was not an image.&#39;));</span>
+</span><span class='line'><span class="x">    }</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Submit függvény:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
+</span><span class='line'><span class="x">  // Ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
+</span><span class='line'><span class="x">  $file = file_check_upload(&#39;file_upload&#39;);</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  // Létezik-e a feltöltött állomány</span>
+</span><span class='line'><span class="x">  if ( isset($file-&gt;filepath) ) {</span>
+</span><span class='line'><span class="x">    // Kép méret ellenőrzése</span>
+</span><span class='line'><span class="x">    list($maxwidth, $maxheight) = explode(&#39;x&#39;, &#39;100x100&#39;);</span>
+</span><span class='line'><span class="x">    if ($info[&#39;width&#39;] &gt; $maxwidth || $info[&#39;height&#39;] &gt; $maxheight) {</span>
+</span><span class='line'><span class="x">      // Átméretezés</span>
+</span><span class='line'><span class="x">      image_scale($file-&gt;filepath, $file-&gt;filepath, $maxwidth, $maxheight);</span>
+</span><span class='line'><span class="x">      // Informáljuk a felhasználót az eseményről.</span>
+</span><span class='line'><span class="x">      drupal_set_message(t(&#39;The image was resized to fit within the maximum allowed dimensions of %dimensions pixels.&#39;, array(&#39;%dimensions&#39; =&gt; &#39;100x100&#39;));</span>
+</span><span class='line'><span class="x">    }</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">    // Állomány elmentése a megadott helyre.</span>
+</span><span class='line'><span class="x">    $file = file_save_upload($file, &#39;cél_könyvtár_útvonala&#39;);</span>
+</span><span class='line'><span class="x">  }</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Aki ismeri a drupal 6 állomány kezelését az tudja, hogy ott már adatbázisban tárolja le az állományok adatait. Adatbázis drupal 5-ben is rendelkezésre áll csak kicsit más a szerkezete, és picit más célokra szolgál. Mi magunk is írhatunk az adatbázisba, ha szeretnénk ott is tárolni az állományaink adatait. Arra azonban figyeljünk, hogy az ötös verzióban magunknak kell gondoskodni az állományok törléséről mind a lemezről mind az adatbázisból (ha használjuk).</p>
+
+<p>Nézzük, hogy kell állományt feltölteni drupal 6 alatt.</p>
+
+<h2><a name="drupal_6">Drupal 6</a></h2>
+
+<p>Hozzuk létre a form függvényünket a következő kép:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form() {</span>
+</span><span class='line'><span class="x">  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
+</span><span class='line'><span class="x">  $form[&#39;#attributes&#39;] = array(</span>
+</span><span class='line'><span class="x">    &#39;enctype&#39; =&gt; &quot;multipart/form-data&quot;</span>
+</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  $form[&#39;file_upload&#39;] = array(</span>
+</span><span class='line'><span class="x">    &#39;#type&#39; =&gt; &#39;file&#39;,</span>
+</span><span class='line'><span class="x">    &#39;#title&#39; =&gt; t(&#39;Filename&#39;),</span>
+</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  $form[&#39;submit&#39;] = array(</span>
+</span><span class='line'><span class="x">    &#39;#type&#39; =&gt; &#39;submit&#39;,</span>
+</span><span class='line'><span class="x">    &#39;#value&#39; =&gt; t(&#39;Upload file&#39;),</span>
+</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  return $form;</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
+</span><span class='line'><span class="x">  //Állomány feltöltése</span>
+</span><span class='line'><span class="x">  if ( $file = file_save_upload(&#39;file_upload&#39;, array(), &#39;cél_könyvtár_útvonala&#39; ) ) {</span>
+</span><span class='line'><span class="x">    //Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
+</span><span class='line'><span class="x">    file_set_status($file, FILE_STATUS_PERMANENT);</span>
+</span><span class='line'><span class="x">  }</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Készítsük el a fenti példa drupal 6-os változatát. A feladat várjunk egy képet, ami nem nagyobb mint 100x100 pixel, ha nagyobb méretezzük át.
+Ebben az esetben nem kell validate függvényt írnunk, mert egy lépésben megtehetjük a submit részben.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
+</span><span class='line'><span class="x">  //Az feltöltött állomány validációs feltételei. </span>
+</span><span class='line'><span class="x">  $validators = array(</span>
+</span><span class='line'><span class="x">    &#39;file_validate_is_image&#39; =&gt; array(),</span>
+</span><span class='line'><span class="x">    &#39;file_validate_image_resolution&#39; =&gt; array(&#39;100x100&#39;),</span>
+</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  //Állomány feltöltése, validációval</span>
+</span><span class='line'><span class="x">  if ( $file = file_save_upload(&#39;file_upload&#39;, $validators, &#39;cél_könyvtár_útvonala&#39; ) ) {</span>
+</span><span class='line'><span class="x">    //Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
+</span><span class='line'><span class="x">    file_set_status($file, FILE_STATUS_PERMANENT);</span>
+</span><span class='line'><span class="x">  }</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A <a href="http://api.drupal.org/api/function/file_save_upload">file_save_upload</a> függvényről az <a href="http://api.drupal.org">http://api.drupal.org</a> oldalon van részletesebb leírás.</p>
+
+<p>Felhasznált források:</p>
+
+<ul>
+<li><a href="http://www.computerminds.co.uk/example-code-build-upload-form-drupal">http://www.computerminds.co.uk/example-code-build-upload-form-drupal</a></li>
+<li><a href="http://groups.drupal.org/node/4308">http://groups.drupal.org/node/4308</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Xdebug with MAMP and Acquia Drupal Stack]]></title>
+    <link href="http://ilo.hu/using-xdebug-with-mamp-and-acquia-drupal-stack/"/>
+    <updated>2009-11-20T17:21:48+01:00</updated>
+    <id>http://ilo.hu/using-xdebug-with-mamp-and-acquia-drupal-stack</id>
+    <content type="html"><![CDATA[<p>Recently I have switched from Linux to OS X.
+In order to continue my job effectively I had to set up a proper development environment.
+For programming tasks I prefer the <a href="http://www.netbeans.org">NetBeans IDE</a>, which is available for OS X.
+I have not yet decided about the server side, so currently I&#8217;m testing two alternatives. Those are <a href="http://www.mamp.info">MAMP</a> and the <a href="http://acquia.com">Acquia Drupal Stack</a> which is a great help for Drupal development.
+I picked Acquia Drupal Stack because most of my tasks are Drupal related and this tool can save me a lot of time.
+You can watch Gabor Hojtsy&#8217;s presentation on Acquia Drupal Stack at DrupalCamp Hungary: <a href="http://csecsy.hu/boobaa_blogja/hojtsy_gabor_telepites_es_menedzseles_az_acquia_stack_installer_segitsegevel_drupal_hetvege_2009_7_resz">here</a>.</p>
+
+<!-- more -->
+
+
+<p>Download and install as usual:</p>
+
+<ul>
+<li>NetBeans: <a href="http://netbeans.org/downloads/indexC.html">http://netbeans.org/downloads/indexC.html</a></li>
+<li>MAMP: <a href="http://www.mamp.info/en/downloads/index.html">http://www.mamp.info/en/downloads/index.html</a></li>
+<li>Acquia Drupal Stack: <a href="http://acquia.com/downloads/mac-installer">http://acquia.com/downloads/mac-installer</a></li>
+</ul>
+
+
+<p>As a last step you need to install Xdebug.</p>
+
+<h2>Enabling Xdebug in MAMP</h2>
+
+<p>Fortunately MAMP contains a pre-compiled xdebug.so file, so you only need to enable it in php.ini. At the same time make sure that Zend optimizer is disabled because it does not work together with Xdebug.
+Edit php.ini using your favorite text editor:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/MAMP/conf/php5/php.ini
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Change the end of the file to this:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="c">;[Zend]</span>
+</span><span class='line'><span class="c">;zend_optimizer.optimization_level=15</span>
+</span><span class='line'><span class="c">;zend_extension_manager.optimizer=/Applications/MAMP/bin/php5/zend/lib/Optimizer-3.3.3</span>
+</span><span class='line'><span class="c">;zend_optimizer.version=3.3.3</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">;zend_extension=/Applications/MAMP/bin/php5/zend/lib/ZendExtensionManager.so</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">[xdebug]</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">xdebug.default_enable</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">xdebug.remote_enable</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'><span class="na">xdebug.remote_handler</span><span class="o">=</span><span class="s">dbgp</span>
+</span><span class='line'><span class="na">xdebug.remote_host</span><span class="o">=</span><span class="s">localhost</span>
+</span><span class='line'><span class="na">xdebug.remote_port</span><span class="o">=</span><span class="s">9000</span>
+</span><span class='line'><span class="na">xdebug.remote_autostart</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">zend_extension</span><span class="o">=</span><span class="s">&quot;/Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Restart MAMP and check phpinfo()&#8217;s output. If you see the following lines then you&#8217;ve successfully enabled Xdebug.
+<img src="http://ilo.hu/images/i/MAMP_phpinfo_xdebug.jpg" alt="MAMP phpinfo xdebug" /></p>
+
+<h2>Enabling Xdebug in Acquia Drupal Stack</h2>
+
+<p>Acquia Drupal Stack doesn&#8217;t contain a pre-compiled xdebug.so file, so you have two choices. Either you compile it from source or use MAMP&#8217;s pre-compiled xdebug.so file. I chose the latter one. (Note: MAMP ships with php 5.2.11, whilst Acquia Drupal Stack uses version 5.2.9.)</p>
+
+<p>Copy xdebug.so from MAMP to Acquia Drupal Stack:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /Applications/acquia-drupal/php/ext/
+</span><span class='line'>cp /Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so .
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Open php.ini using your favorite text editor:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/acquia-drupal/php/bin/php.ini
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add the following lines to the end:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="k">[xdebug]</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">xdebug.default_enable</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">xdebug.remote_enable</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'><span class="na">xdebug.remote_handler</span><span class="o">=</span><span class="s">dbgp</span>
+</span><span class='line'><span class="na">xdebug.remote_host</span><span class="o">=</span><span class="s">localhost</span>
+</span><span class='line'><span class="na">xdebug.remote_port</span><span class="o">=</span><span class="s">9080</span>
+</span><span class='line'><span class="na">xdebug.remote_autostart</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">zend_extension</span><span class="o">=</span><span class="s">/Applications/acquia-drupal/php/ext/xdebug.so</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this example Xdebug is using port 9080, which is needed to make sure that MAMP and Acquia Drupal Stack don&#8217;t use the same port.
+If you are not going to use them simultaneously then port 9000 is also fine here.</p>
+
+<p>You can use phpinfo() from Acquia Drupal Stack&#8217;s settings:
+<img src="http://ilo.hu/images/i/Acquia_Settings.jpg" alt="Acquia Settings" /></p>
+
+<p>If you see the following then you&#8217;ve successfully enabled Xdebug:
+<img src="http://ilo.hu/images/i/Acquia_phpinfo_xdebug.jpg" alt="Acquia phpinfo xdebug" /></p>
+
+<h2>Real time debugging with NetBeans</h2>
+
+<p>Below you can see the settings for PHP debugging in MAMP environment:
+<img src="http://ilo.hu/images/i/NetBeans_xdebug.jpg" alt="NetBeans xdebug" /></p>
+
+<p>If you use Acquia Drupal Stack, change PHP 5 Interpreter and Debugger Port settings respectively.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PHP 5 Interpreter: /Applications/acquia-drupal/php/bin/php
+</span><span class='line'>Debugger Port: 9080</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Web browser settings should look like this way:</p>
+
+<p><img src="http://ilo.hu/images/i/NetBeans_Browser_Options.jpg" alt="NetBeans Browser Options" /></p>
+
+<p><img src="http://ilo.hu/images/i/NetBeans_Settings_Web_Browsers.jpg" alt="NetBeans Settings Web Browsers" /></p>
+
+<p>Now you only need to set a break point and start debugging.</p>
+
+<p>I would like to thank <a href="http://itarato.blogspot.com/">itarato</a> and <a href="http://zserno.blogspot.com/">zserno</a> for their help in writing this article.
+This article was translated to English by <a href="http://zserno.blogspot.com/">zserno</a>. For the original hungarian article click <a href="http://openproject.hu/blog/york/mamp-es-acquia-drupal-stack-felruhazasa-xdebug-kepesseggel">here</a>.</p>
+
+<p>References:</p>
+
+<ul>
+<li><a href="http://debuggable.com/posts/setting-up-xdebug-on-mac-os-x-or-win32-linux:480f4dd6-0240-4a90-8fa1-4e41cbdd56cb">http://debuggable.com/posts/setting-up-xdebug-on-mac-os-x-or-win32-linux:480f4dd6-0240-4a90-8fa1-4e41cbdd56cb</a></li>
+<li><a href="http://robshouse.net/article/xdebug-komodo-and-acquia-drupal-stack-installer">http://robshouse.net/article/xdebug-komodo-and-acquia-drupal-stack-installer</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MAMP és Acquia Drupal Stack felruházása Xdebug képességgel]]></title>
+    <link href="http://ilo.hu/mamp-es-acquia-drupal-stack-felruhazasa-xdebug-kepesseggel/"/>
+    <updated>2009-11-18T15:20:00+01:00</updated>
+    <id>http://ilo.hu/mamp-es-acquia-drupal-stack-felruhazasa-xdebug-kepesseggel</id>
+    <content type="html"><![CDATA[<p>Nemrég váltottam Linuxról OS X-re. Ahhoz hogy a munkámat el tudjam végezni ki kellett alakítanom a megfelelő munkakörnyezetet.
+A program készítéshez <a href="http://www.netbeans.org">NetBeans IDE</a>-t használom ez elérhető OS X-
+re is.
+A szerver oldali környezetet még nem döntöttem el véglegesen, jelenleg két versenyzőt tesztelek, az egyik a <a href="http://www.mamp.info">MAMP</a> a másik a Drupal fejlesztésekhez jól használható <a href="http://acquia.com">Acquia Drupal Stack</a>. Az Acquia Drupal Stack úgy került képbe, hogy a munkam során zömmel drupallal foglalkozom, és ezzel a környezettel sok időt lehet spórolni. A drupal hétvégen <a href="http://hojtsy.hu">Hojtsy Gábor</a> mutatta be az Acquia Drupal Stack-et megtekinthető <a href="http://csecsy.hu/boobaa_blogja/hojtsy_gabor_telepites_es_menedzseles_az_acquia_stack_installer_segitsegevel_drupal_hetvege_2009_7_resz">itt</a>.</p>
+
+<!-- more -->
+
+
+<p>Letöltés és telepítés nem okozhat senkinek gondot:</p>
+
+<ul>
+<li>NetBeans: <a href="http://netbeans.org/downloads/indexC.html">http://netbeans.org/downloads/indexC.html</a></li>
+<li>MAMP: <a href="http://www.mamp.info/en/downloads/index.html">http://www.mamp.info/en/downloads/index.html</a></li>
+<li>Acquia Drupal Stack: <a href="http://acquia.com/downloads/mac-installer">http://acquia.com/downloads/mac-installer</a></li>
+</ul>
+
+
+<p>A programok telepítése után már csak az Xdebug beállítása hiányzik.</p>
+
+<h2>MAMP Xdebug kiterjesztés bekapcsolása</h2>
+
+<p>A MAMP tartalmaz előre fordított xdebug.so állományt, ezt kapcsoljuk be a php.ini-ben, a zend optimizert ki kell kapcsolnunk ugyanitt, mert összeakad az Xdebuggal.
+Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/MAMP/conf/php5/php.ini
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Az állomány végét írjuk át ilyenre:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="c">;[Zend]</span>
+</span><span class='line'><span class="c">;zend_optimizer.optimization_level=15</span>
+</span><span class='line'><span class="c">;zend_extension_manager.optimizer=/Applications/MAMP/bin/php5/zend/lib/Optimizer-3.3.3</span>
+</span><span class='line'><span class="c">;zend_optimizer.version=3.3.3</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">;zend_extension=/Applications/MAMP/bin/php5/zend/lib/ZendExtensionManager.so</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">[xdebug]</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">xdebug.default_enable</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">xdebug.remote_enable</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'><span class="na">xdebug.remote_handler</span><span class="o">=</span><span class="s">dbgp</span>
+</span><span class='line'><span class="na">xdebug.remote_host</span><span class="o">=</span><span class="s">localhost</span>
+</span><span class='line'><span class="na">xdebug.remote_port</span><span class="o">=</span><span class="s">9000</span>
+</span><span class='line'><span class="na">xdebug.remote_autostart</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">zend_extension</span><span class="o">=</span><span class="s">&quot;/Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ezután indítsuk újra a MAMP-ot és nézzük meg a phpinfo() kimenetét, ha ezt látjuk akkor sikerült bekapcsolni az xdebugot:
+<img src="http://ilo.hu/images/i/MAMP_phpinfo_xdebug.jpg" alt="MAMP phpinfo xdebug" /></p>
+
+<h2>Acquia Drupal Stack Xdebug kiterjesztés bekapcsolása</h2>
+
+<p>Az Acquia Drupal Stack nem tartalmaz előre fordított xdebug.so állományt, így két út áll előttünk, vagy fordítunk egyet forrásból, vagy felhasználjuk a MAMP-ban található előre fordított xdebug.so állományt, én ez utóbbit választottam. (A MAMP 5.2.11-es php-t tartalmaz az Acquia Drupal Stack 5.2.9-est.)</p>
+
+<p>Másoljuk a MAMP-ban található xdebug.so-t az Acquia Drupal Stack-be:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /Applications/acquia-drupal/php/ext/
+</span><span class='line'>cp /Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so .
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/acquia-drupal/php/bin/php.ini
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Az állomány végére írjuk be a következőt:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="k">[xdebug]</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">xdebug.default_enable</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">xdebug.remote_enable</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'><span class="na">xdebug.remote_handler</span><span class="o">=</span><span class="s">dbgp</span>
+</span><span class='line'><span class="na">xdebug.remote_host</span><span class="o">=</span><span class="s">localhost</span>
+</span><span class='line'><span class="na">xdebug.remote_port</span><span class="o">=</span><span class="s">9080</span>
+</span><span class='line'><span class="na">xdebug.remote_autostart</span><span class="o">=</span><span class="s">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">zend_extension</span><span class="o">=</span><span class="s">/Applications/acquia-drupal/php/ext/xdebug.so</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ebben az esetben az Xdebug a 9080 porton figyel, erre azért van szükség, hogy ha egyszerre megy a MAMP és az Acquia Drupal Stack akkor ne akadjanak össze, ha csak az egyik van használva akkor itt is a 9000 portot kell megadni.</p>
+
+<p>Az Acquia Drupal Stack beállításainál találjuk a phpinfo()-ra mutató linket:
+<img src="http://ilo.hu/images/i/Acquia_Settings.jpg" alt="Acquia Settings" /></p>
+
+<p>Ha ezt látjuk a phpinfo() kimenetében akkor sikerrel jártunk:
+<img src="http://ilo.hu/images/i/Acquia_phpinfo_xdebug.jpg" alt="Acquia phpinfo xdebug" /></p>
+
+<h2>NetBeans Xdebug a gyakorlatban</h2>
+
+<p>A PHP debug beállításai láthatok MAMP környezethez:
+<img src="http://ilo.hu/images/i/NetBeans_xdebug.jpg" alt="NetBeans xdebug" /></p>
+
+<p>Acquia Drupal Stack esetén a PHP 5 Interpreter és a Debugger Portot kell átírni.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PHP 5 Interpreter: /Applications/acquia-drupal/php/bin/php
+</span><span class='line'>Debugger Port: 9080</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A böngésző beállítások így nézzenek ki:</p>
+
+<p><img src="http://ilo.hu/images/i/NetBeans_Browser_Options.jpg" alt="NetBeans Browser Options" /></p>
+
+<p><img src="http://ilo.hu/images/i/NetBeans_Settings_Web_Browsers.jpg" alt="NetBeans Settings Web Browsers" /></p>
+
+<p>Ezután már csak egy break point kell és lehet indítani a hibakeresést.</p>
+
+<p>Ez a dokumentáció nem jött volna létre ha nincs <a href="http://itarato.blogspot.com/">itarato</a> és <a href="http://zserno.blogspot.com/">zserno</a>.</p>
+
+<p>Felhasznált dokumentáció:</p>
+
+<ul>
+<li><a href="http://debuggable.com/posts/setting-up-xdebug-on-mac-os-x-or-win32-linux:480f4dd6-0240-4a90-8fa1-4e41cbdd56cb">http://debuggable.com/posts/setting-up-xdebug-on-mac-os-x-or-win32-linux:480f4dd6-0240-4a90-8fa1-4e41cbdd56cb</a></li>
+<li><a href="http://robshouse.net/article/xdebug-komodo-and-acquia-drupal-stack-installer">http://robshouse.net/article/xdebug-komodo-and-acquia-drupal-stack-installer</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

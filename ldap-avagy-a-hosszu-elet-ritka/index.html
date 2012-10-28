@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>LDAP avagy a hosszú élet ritka - Drupal kattintgatás nélkül</title>
+  <meta name="author" content="York">
+
+  
+  <meta name="description" content="A feladata egyszerű telepítsünk LDAP szervert, hozzunk létre benne néhány felhasználót és csoportot. Most csak a telepítésről fogok írni, mert nem az &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ilo.hu/ldap-avagy-a-hosszu-elet-ritka/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Drupal kattintgatás nélkül" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo"><a href="/" title="Címlap" rel="home" id="logo"><img src="/images/icons/logo.png" alt="Címlap"></a></div>
+  <h1><a href="/">Drupal kattintgatás nélkül</a></h1>
+  
+    <h2>Avagy egy drupal programozó hétköznapjai</h2>
+  
+</hgroup>
+
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">LDAP Avagy a Hosszú élet Ritka</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-26T12:33:41+01:00" pubdate data-updated="true">2010-01-26 12:33</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>A feladata egyszerű telepítsünk LDAP szervert, hozzunk létre benne néhány felhasználót és csoportot. Most csak a telepítésről fogok írni, mert nem az olyan simán, mint azt vártam.</p>
+
+<p>A rendszer ubuntu 9.10, amiben 2.4.x verziójú LDAP szerver található.</p>
+
+<h2>Telepítés</h2>
+
+<p>A telepítéshez találtam egy jó kis dokumentációt az ubuntu oldalán:
+<a href="http://sugo.ubuntu.hu/9.04/html/serverguide/hu/openldap-server.html">http://sugo.ubuntu.hu/9.04/html/serverguide/hu/openldap-server.html</a></p>
+
+<!-- more -->
+
+
+<p>Adjuk ki a következő parancsot:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install slapd ldap-utils
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Minden kérdés nélkül feltelepül az openldap szerver. Ez itt már gyanús volt, nem kért adminisztrátor jelszót. Igaz máshol már olvastam, hogy ezt a konfigurációs állományba kell beírni.
+No para, irány az /etc/ldap/ könyvtár és írjuk be a jelszót a slapd.conf állományba. Az első meglepetés itt ért, nincs slapd.conf, csak slapd.d könyvtár. A LDAP szerver 2.4 verziójától kezdve az LDAP szerver konfigurációját is LDAP-ban tárolja. Természetesen lehetőség van a régi konfiguráció szerint is használni a rendszert, de ha itt az új, akkor használjuk azt.</p>
+
+<h2>Én vagyok a főnök?</h2>
+
+<p>Miután átnéztem a fenti dokumentációt és abban nem találtam a megoldást az adminisztrátor jelszó megadására, még adtam egy esélyt a csomaggal érkező dokumentációnak is, de itt sem volt leírva, hogy leszek én a főnök. Ezután jött a google :), simogattam a lámpást mire a megfelelő oldalt megtalálta nekem íme:
+<a href="http://ubuntuforums.org/showthread.php?t=1343931">http://ubuntuforums.org/showthread.php?t=1343931</a></p>
+
+<p>Ezen az oldalon található a következő script amit lefuttatva elkészíti nekünk az adminisztrátor felhasználót és még néhány alapvető sémát is hozzáad a szerverhez, valamint egy kezdő ágat is létrehoz.
+A script:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/cosine.ldif;<span class="se">\</span>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/inetorgperson.ldif;<span class="se">\</span>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/nis.ldif
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;insert your domain name (ex: dc=home,dc=com): &#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">read</span> -e domain
+</span><span class='line'>
+</span><span class='line'><span class="nv">passChecked</span><span class="o">=</span>0
+</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nv">$passChecked</span> -eq 0 <span class="o">]</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;insert password for user admin:&quot;</span>
+</span><span class='line'><span class="nb">read</span> -es pass
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;repeat password for user admin:&quot;</span>
+</span><span class='line'><span class="nb">read</span> -es passControl
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$pass</span>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$passControl</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$pass</span> <span class="o">=</span> <span class="nv">$passControl</span> <span class="o">]</span>;<span class="k">then</span>
+</span><span class='line'><span class="nv">passChecked</span><span class="o">=</span>1
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;passwords don&#39;t match&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;################################################# ##########</span>
+</span><span class='line'><span class="s2"># DATABASE SETUP</span>
+</span><span class='line'><span class="s2">################################################## #########</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2"># Load modules for database type</span>
+</span><span class='line'><span class="s2">dn: cn=module{0},cn=config</span>
+</span><span class='line'><span class="s2">objectClass: olcModuleList</span>
+</span><span class='line'><span class="s2">cn: module{0}</span>
+</span><span class='line'><span class="s2">olcModulePath: /usr/lib/ldap</span>
+</span><span class='line'><span class="s2">olcModuleLoad: {0}back_hdb</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2"># Create directory database</span>
+</span><span class='line'><span class="s2">dn: olcDatabase={1}hdb,cn=config</span>
+</span><span class='line'><span class="s2">objectClass: olcDatabaseConfig</span>
+</span><span class='line'><span class="s2">objectClass: olcHdbConfig</span>
+</span><span class='line'><span class="s2">olcDatabase: {1}hdb</span>
+</span><span class='line'><span class="s2">olcDbDirectory: /var/lib/ldap</span>
+</span><span class='line'><span class="s2">olcSuffix: $domain</span>
+</span><span class='line'><span class="s2">olcRootDN: cn=admin,$domain</span>
+</span><span class='line'><span class="s2">olcRootPW: $pass</span>
+</span><span class='line'><span class="s2">olcAccess: {0}to attrs=userPassword,shadowLastChange by dn=\&quot;cn=admin,$domain\&quot; write by anonymous auth by self write by * none</span>
+</span><span class='line'><span class="s2">olcAccess: {1}to dn.base=&quot;&quot; by * read</span>
+</span><span class='line'><span class="s2">olcAccess: {2}to * by dn=\&quot;cn=admin,$domain\&quot; write by * read</span>
+</span><span class='line'><span class="s2">olcLastMod: TRUE</span>
+</span><span class='line'><span class="s2">olcDbCheckpoint: 512 30</span>
+</span><span class='line'><span class="s2">olcDbConfig: {0}set_cachesize 0 2097152 0</span>
+</span><span class='line'><span class="s2">olcDbConfig: {1}set_lk_max_objects 1500</span>
+</span><span class='line'><span class="s2">olcDbConfig: {2}set_lk_max_locks 1500</span>
+</span><span class='line'><span class="s2">olcDbConfig: {3}set_lk_max_lockers 1500</span>
+</span><span class='line'><span class="s2">olcDbIndex: uid pres,eq</span>
+</span><span class='line'><span class="s2">olcDbIndex: cn,sn,mail pres,eq,approx,sub</span>
+</span><span class='line'><span class="s2">olcDbIndex: objectClass eq</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="s2">################################################## #########</span>
+</span><span class='line'><span class="s2"># DEFAULTS MODIFICATION</span>
+</span><span class='line'><span class="s2">################################################## #########</span>
+</span><span class='line'><span class="s2"># Some of the defaults need to be modified in order to allow</span>
+</span><span class='line'><span class="s2"># remote access to the LDAP config. Otherwise only root</span>
+</span><span class='line'><span class="s2"># will have administrative access.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">dn: cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">delete: olcAuthzRegexp</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">dn: olcDatabase={-1}frontend,cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">delete: olcAccess</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">dn: olcDatabase={0}config,cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">add: olcRootPW</span>
+</span><span class='line'><span class="s2">olcRootPW: `slappasswd -s $pass`</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">dn: olcDatabase={0}config,cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">delete: olcAccess&quot;</span> &gt; conf.ldif
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f conf.ldif
+</span><span class='line'>
+</span><span class='line'><span class="nv">domainmod</span><span class="o">=(</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$domain</span> | sed -e <span class="s2">&quot;s/\,//g&quot;</span><span class="sb">`</span><span class="o">)</span>
+</span><span class='line'><span class="nv">domainmod</span><span class="o">=(</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$domainmod</span> | sed -e <span class="s2">&quot;s/\dc//g&quot;</span><span class="sb">`</span><span class="o">)</span>
+</span><span class='line'><span class="nv">domainarray</span><span class="o">=(</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$domainmod</span> | tr <span class="s1">&#39;=&#39;</span> <span class="s1">&#39; &#39;</span><span class="sb">`</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;# Tree root</span>
+</span><span class='line'><span class="s2">dn: $domain</span>
+</span><span class='line'><span class="s2">objectClass: dcObject</span>
+</span><span class='line'><span class="s2">objectclass: organization</span>
+</span><span class='line'><span class="s2">o: ${domainarray[0]}.${domainarray[1]}</span>
+</span><span class='line'><span class="s2">dc: ${domainarray[0]}</span>
+</span><span class='line'><span class="s2">description: Tree root</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2"># LDAP admin</span>
+</span><span class='line'><span class="s2">dn: cn=admin,$domain</span>
+</span><span class='line'><span class="s2">objectClass: simpleSecurityObject</span>
+</span><span class='line'><span class="s2">objectClass: organizationalRole</span>
+</span><span class='line'><span class="s2">cn: admin</span>
+</span><span class='line'><span class="s2">userPassword: $pass</span>
+</span><span class='line'><span class="s2">description: LDAP administrator&quot;</span> &gt; base.ldif
+</span><span class='line'>
+</span><span class='line'>ldapadd -x -D <span class="nv">cn</span><span class="o">=</span>admin,<span class="nv">$domain</span> -W -f base.ldif
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A kedvenc szövegszerkesztőnk segítségével hozzunk létre egy állományt a fenti tartalommal, majd adjunk rá futtatás jogot és a sudo segítségével futtassuk le.</p>
+
+<h3>FIGYELEM! Ezt csak egyszer futtassuk le!</h3>
+
+<p>Meg fogja kérdezni tőlünk az adminisztrátor jelszót és azt az ágat amit létre szeretnénk hozni. Adjuk meg az adatokat és már kész is vagyunk. Én itt még csináltam egy LDAP szerver újraindítást a biztonság kedvéért.</p>
+
+<h2>A főnök én vagyok!</h2>
+
+<p>Most már sikerült belépni admin felhasználóval az LDAP szerverre.
+Az örök rejtély számomra, hogy ezt miért nem végzi el helyettem a telepítő, vagy miért nincs a csomag dokumentációjában leírva a kezdőlépéseknél.</p>
+
+<p>A következő kliens programot használtam hozzá:
+<a href="http://sourceforge.net/projects/jxplorer/">http://sourceforge.net/projects/jxplorer/</a></p>
+
+<p>Kiegészítés:
+Ha a fenti módszer nem működne akkor nézd meg ezt a leírást:
+<a href="http://ubuntuforums.org/showpost.php?p=8161118&amp;postcount=6">http://ubuntuforums.org/showpost.php?p=8161118&amp;postcount=6</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">York</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-26T12:33:41+01:00" pubdate data-updated="true">2010-01-26 12:33</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/ldap/'>LDAP</a>, <a class='category' href='/categories/linux/'>Linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ilo.hu/ldap-avagy-a-hosszu-elet-ritka/" data-via="" data-counturl="http://ilo.hu/ldap-avagy-a-hosszu-elet-ritka/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/allomany-feltoltes-sajat-formon/" title="Previous Post: Állomány feltöltés saját formon">&laquo; Állomány feltöltés saját formon</a>
+      
+      
+        <a class="basic-alignment right" href="/drupal-modul-keszitese-egyszeru/" title="Next Post: Drupal modul készítése egyszerű">Drupal modul készítése egyszerű &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+<div id="sidebar-search">
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:ilo.hu" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+</div>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/elso-drupal-contrib-patch-amit-irtam/">Első drupal contrib patch amit irtam</a>
+      </li>
+    
+      <li class="post">
+        <a href="/time-machine-samba-megosztasra-mentsen-snow-leopard-alatt/">Time Machine Samba megosztásra mentsen Snow Leopard alatt</a>
+      </li>
+    
+      <li class="post">
+        <a href="/drupal-modul-keszitese-egyszeru/">Drupal modul készítése egyszerű</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ldap-avagy-a-hosszu-elet-ritka/">LDAP avagy a hosszú élet ritka</a>
+      </li>
+    
+      <li class="post">
+        <a href="/allomany-feltoltes-sajat-formon/">Állomány feltöltés saját formon</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/drupal-5'>Drupal 5 (1)</a></li><li><a href='/categories/drupal-6'>Drupal 6 (5)</a></li><li><a href='/categories/drupal-hu-planet'>Drupal.hu planet (2)</a></li><li><a href='/categories/en'>EN (1)</a></li><li><a href='/categories/form-api'>Form API (1)</a></li><li><a href='/categories/howto'>Howto (2)</a></li><li><a href='/categories/ldap'>LDAP (1)</a></li><li><a href='/categories/linux'>Linux (1)</a></li><li><a href='/categories/mamp'>MAMP (2)</a></li><li><a href='/categories/module'>Module (2)</a></li><li><a href='/categories/netbeans'>NetBeans (2)</a></li><li><a href='/categories/osx'>OSX (3)</a></li><li><a href='/categories/php'>PHP (3)</a></li></ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <div class="about-me">
+    <div id="social_facebook"><a href="http://www.facebook.com/Yorkhun"><img src="/images/icons/facebook.png"></a></div>
+    <div id="social_twitter"><a href="http://twitter.com/yorkhu"><img src="/images/icons/twitter.png"></a></div>
+    <div id="social_rss"><a href="/atom.xml" title="subscribe via RSS"><img src="/images/icons/rss.png"></a></div>
+  </div>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><div id="footer">
+    <section>
+        <div class="licence-img"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/hu/"><img alt="Creative Commons Licenc" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/2.5/hu/88x31.png"></a></div>
+        <div class="licence-text">A honlapon megjelent <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" rel="dct:type">Írások</span> a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/hu/">Creative Commons Nevezd meg! - Ne add el! - Így add tovább! 2.5 Magyarország Licenc feltételeinek megfelelően szabadon felhasználható</a>.</div>
+        <p>
+            Copyright &copy; 2012 - York -
+            <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+        </p>
+    </section>
+</div>
+
+
+
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

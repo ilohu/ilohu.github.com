@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: LDAP | Drupal kattintgatás nélkül]]></title>
+  <link href="http://ilo.hu/categories/ldap/atom.xml" rel="self"/>
+  <link href="http://ilo.hu/"/>
+  <updated>2012-10-28T21:18:07+01:00</updated>
+  <id>http://ilo.hu/</id>
+  <author>
+    <name><![CDATA[York]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[LDAP avagy a hosszú élet ritka]]></title>
+    <link href="http://ilo.hu/ldap-avagy-a-hosszu-elet-ritka/"/>
+    <updated>2010-01-26T12:33:41+01:00</updated>
+    <id>http://ilo.hu/ldap-avagy-a-hosszu-elet-ritka</id>
+    <content type="html"><![CDATA[<p>A feladata egyszerű telepítsünk LDAP szervert, hozzunk létre benne néhány felhasználót és csoportot. Most csak a telepítésről fogok írni, mert nem az olyan simán, mint azt vártam.</p>
+
+<p>A rendszer ubuntu 9.10, amiben 2.4.x verziójú LDAP szerver található.</p>
+
+<h2>Telepítés</h2>
+
+<p>A telepítéshez találtam egy jó kis dokumentációt az ubuntu oldalán:
+<a href="http://sugo.ubuntu.hu/9.04/html/serverguide/hu/openldap-server.html">http://sugo.ubuntu.hu/9.04/html/serverguide/hu/openldap-server.html</a></p>
+
+<!-- more -->
+
+
+<p>Adjuk ki a következő parancsot:
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install slapd ldap-utils
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Minden kérdés nélkül feltelepül az openldap szerver. Ez itt már gyanús volt, nem kért adminisztrátor jelszót. Igaz máshol már olvastam, hogy ezt a konfigurációs állományba kell beírni.
+No para, irány az /etc/ldap/ könyvtár és írjuk be a jelszót a slapd.conf állományba. Az első meglepetés itt ért, nincs slapd.conf, csak slapd.d könyvtár. A LDAP szerver 2.4 verziójától kezdve az LDAP szerver konfigurációját is LDAP-ban tárolja. Természetesen lehetőség van a régi konfiguráció szerint is használni a rendszert, de ha itt az új, akkor használjuk azt.</p>
+
+<h2>Én vagyok a főnök?</h2>
+
+<p>Miután átnéztem a fenti dokumentációt és abban nem találtam a megoldást az adminisztrátor jelszó megadására, még adtam egy esélyt a csomaggal érkező dokumentációnak is, de itt sem volt leírva, hogy leszek én a főnök. Ezután jött a google :), simogattam a lámpást mire a megfelelő oldalt megtalálta nekem íme:
+<a href="http://ubuntuforums.org/showthread.php?t=1343931">http://ubuntuforums.org/showthread.php?t=1343931</a></p>
+
+<p>Ezen az oldalon található a következő script amit lefuttatva elkészíti nekünk az adminisztrátor felhasználót és még néhány alapvető sémát is hozzáad a szerverhez, valamint egy kezdő ágat is létrehoz.
+A script:
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/cosine.ldif;<span class="se">\</span>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/inetorgperson.ldif;<span class="se">\</span>
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/nis.ldif&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;echo <span class="s1">&#39;insert your domain name (ex: dc=home,dc=com): &#39;</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;read -e domain&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;passChecked<span class="o">=</span>0
+</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nv">$passChecked</span> -eq 0 <span class="o">]</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;insert password for user admin:&quot;</span>
+</span><span class='line'><span class="nb">read</span> -es pass
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;repeat password for user admin:&quot;</span>
+</span><span class='line'><span class="nb">read</span> -es passControl&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;echo <span class="nv">$pass</span>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$passControl</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$pass</span> <span class="o">=</span> <span class="nv">$passControl</span> <span class="o">]</span>;<span class="k">then</span>
+</span><span class='line'><span class="nv">passChecked</span><span class="o">=</span>1
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;passwords don&#39;t match&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="k">done</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;echo <span class="s2">&quot;################################################# ##########&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h1&gt;DATABASE SETUP&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h6&gt;############################################&lt;/h6&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h1&gt;Load modules for database type&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;p&gt;dn: cn=module{0},cn=config</span>
+</span><span class='line'><span class="s2">objectClass: olcModuleList</span>
+</span><span class='line'><span class="s2">cn: module{0}</span>
+</span><span class='line'><span class="s2">olcModulePath: /usr/lib/ldap</span>
+</span><span class='line'><span class="s2">olcModuleLoad: {0}back_hdb&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h1&gt;Create directory database&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;p&gt;dn: olcDatabase={1}hdb,cn=config</span>
+</span><span class='line'><span class="s2">objectClass: olcDatabaseConfig</span>
+</span><span class='line'><span class="s2">objectClass: olcHdbConfig</span>
+</span><span class='line'><span class="s2">olcDatabase: {1}hdb</span>
+</span><span class='line'><span class="s2">olcDbDirectory: /var/lib/ldap</span>
+</span><span class='line'><span class="s2">olcSuffix: $domain</span>
+</span><span class='line'><span class="s2">olcRootDN: cn=admin,$domain</span>
+</span><span class='line'><span class="s2">olcRootPW: $pass</span>
+</span><span class='line'><span class="s2">olcAccess: {0}to attrs=userPassword,shadowLastChange by dn=\&quot;cn=admin,$domain\&quot; write by anonymous auth by self write by * none</span>
+</span><span class='line'><span class="s2">olcAccess: {1}to dn.base=&quot;&quot; by * read</span>
+</span><span class='line'><span class="s2">olcAccess: {2}to * by dn=\&quot;cn=admin,$domain\&quot; write by * read</span>
+</span><span class='line'><span class="s2">olcLastMod: TRUE</span>
+</span><span class='line'><span class="s2">olcDbCheckpoint: 512 30</span>
+</span><span class='line'><span class="s2">olcDbConfig: {0}set_cachesize 0 2097152 0</span>
+</span><span class='line'><span class="s2">olcDbConfig: {1}set_lk_max_objects 1500</span>
+</span><span class='line'><span class="s2">olcDbConfig: {2}set_lk_max_locks 1500</span>
+</span><span class='line'><span class="s2">olcDbConfig: {3}set_lk_max_lockers 1500</span>
+</span><span class='line'><span class="s2">olcDbIndex: uid pres,eq</span>
+</span><span class='line'><span class="s2">olcDbIndex: cn,sn,mail pres,eq,approx,sub</span>
+</span><span class='line'><span class="s2">olcDbIndex: objectClass eq&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h6&gt;############################################&lt;/h6&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h1&gt;DEFAULTS MODIFICATION&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h6&gt;############################################&lt;/h6&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h1&gt;Some of the defaults need to be modified in order to allow&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h1&gt;remote access to the LDAP config. Otherwise only root&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h1&gt;will have administrative access.&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;p&gt;dn: cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">delete: olcAuthzRegexp&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;p&gt;dn: olcDatabase={-1}frontend,cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">delete: olcAccess&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;p&gt;dn: olcDatabase={0}config,cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">add: olcRootPW</span>
+</span><span class='line'><span class="s2">olcRootPW: &lt;code&gt;slappasswd -s $pass&lt;/code&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;p&gt;dn: olcDatabase={0}config,cn=config</span>
+</span><span class='line'><span class="s2">changetype: modify</span>
+</span><span class='line'><span class="s2">delete: olcAccess&quot;</span> &gt; conf.ldif&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;echo
+</span><span class='line'>ldapadd -Y EXTERNAL -H ldapi:/// -f conf.ldif&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;domainmod<span class="o">=(</span>&lt;code&gt;echo <span class="nv">$domain</span> | sed -e <span class="s2">&quot;s/\,//g&quot;</span>&lt;/code&gt;<span class="o">)</span>
+</span><span class='line'><span class="nv">domainmod</span><span class="o">=(</span>&lt;code&gt;echo <span class="nv">$domainmod</span> | sed -e <span class="s2">&quot;s/\dc//g&quot;</span>&lt;/code&gt;<span class="o">)</span>
+</span><span class='line'><span class="nv">domainarray</span><span class="o">=(</span>&lt;code&gt;echo <span class="nv">$domainmod</span> | tr <span class="s1">&#39;=&#39;</span> <span class="s1">&#39; &#39;</span>&lt;/code&gt;<span class="o">)</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;echo <span class="s2">&quot;# Tree root</span>
+</span><span class='line'><span class="s2">dn: $domain</span>
+</span><span class='line'><span class="s2">objectClass: dcObject</span>
+</span><span class='line'><span class="s2">objectclass: organization</span>
+</span><span class='line'><span class="s2">o: ${domainarray[0]}.${domainarray[1]}</span>
+</span><span class='line'><span class="s2">dc: ${domainarray[0]}</span>
+</span><span class='line'><span class="s2">description: Tree root&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h1&gt;LDAP admin&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;p&gt;dn: cn=admin,$domain</span>
+</span><span class='line'><span class="s2">objectClass: simpleSecurityObject</span>
+</span><span class='line'><span class="s2">objectClass: organizationalRole</span>
+</span><span class='line'><span class="s2">cn: admin</span>
+</span><span class='line'><span class="s2">userPassword: $pass</span>
+</span><span class='line'><span class="s2">description: LDAP administrator&quot;</span> &gt; base.ldif&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;ldapadd -x -D <span class="nv">cn</span><span class="o">=</span>admin,<span class="nv">$domain</span> -W -f base.ldif
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>A kedvenc szövegszerkesztőnk segítségével hozzunk létre egy állományt a fenti tartalommal, majd adjunk rá futtatás jogot és a sudo segítségével futtassuk le.</p>
+
+<h3>FIGYELEM! Ezt csak egyszer futtassuk le!</h3>
+
+<p>Meg fogja kérdezni tőlünk az adminisztrátor jelszót és azt az ágat amit létre szeretnénk hozni. Adjuk meg az adatokat és már kész is vagyunk. Én itt még csináltam egy LDAP szerver újraindítást a biztonság kedvéért.</p>
+
+<h2>A főnök én vagyok!</h2>
+
+<p>Most már sikerült belépni admin felhasználóval az LDAP szerverre.
+Az örök rejtély számomra, hogy ezt miért nem végzi el helyettem a telepítő, vagy miért nincs a csomag dokumentációjában leírva a kezdőlépéseknél.</p>
+
+<p>A következő kliens programot használtam hozzá:
+<a href="http://sourceforge.net/projects/jxplorer/">http://sourceforge.net/projects/jxplorer/</a></p>
+
+<p>Kiegészítés:
+Ha a fenti módszer nem működne akkor nézd meg ezt a leírást:
+<a href="http://ubuntuforums.org/showpost.php?p=8161118&amp;postcount=6">http://ubuntuforums.org/showpost.php?p=8161118&amp;postcount=6</a></p>
+]]></content>
+  </entry>
+  
+</feed>
