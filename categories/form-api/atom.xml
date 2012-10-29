@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Form API | Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/categories/form-api/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2012-10-28T21:54:24+01:00</updated>
+  <updated>2012-10-29T19:07:16+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -28,86 +28,50 @@ Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a hr
 <h2><a name="drupal_5">Drupal 5</a></h2>
 
 <p>Form függvényünkben most csak egy állományt fogunk feltölteni:
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form() {</span>
-</span><span class='line'><span class="x">  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
-</span><span class='line'><span class="x">  $form[&#39;#attributes&#39;] = array(&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;&#39;enctype&#39; =&amp;gt; &quot;multipart/form-data&quot;</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  );&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  $form[&#39;file_upload&#39;] = array(&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;&#39;#type&#39; =&amp;gt; &#39;file&#39;,</span>
-</span><span class='line'><span class="x">&#39;#title&#39; =&amp;gt; t(&#39;Filename&#39;),</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  );&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  $form[&#39;submit&#39;] = array(&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;&#39;#type&#39; =&amp;gt; &#39;submit&#39;,</span>
-</span><span class='line'><span class="x">&#39;#value&#39; =&amp;gt; t(&#39;Upload file&#39;),</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  );&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  return $form;</span>
-</span><span class='line'><span class="x">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+```phpinline
+function mymodule_upload_form() {
+  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány
+  $form['#attributes'] = array(</p>
+
+<pre><code>'enctype' =&gt; "multipart/form-data"
+</code></pre>
+
+<p>  );</p>
+
+<p>  $form['file_upload'] = array(</p>
+
+<pre><code>'#type' =&gt; 'file',
+'#title' =&gt; t('Filename'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  $form['submit'] = array(</p>
+
+<pre><code>'#type' =&gt; 'submit',
+'#value' =&gt; t('Upload file'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  return $form;
+}
+```</p>
 
 <p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés&lt;br/&gt;</span>
-</span><span class='line'><span class="x">  $file = file_check_upload(&#39;file_upload&#39;);</span>
-</span><span class='line'><span class="x">  if ($file){&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;// Ha sikeres volt elmentjük az állományt a megadott könyvtárba</span>
-</span><span class='line'><span class="x">$file = file_save_upload($file, &#39;cél_könyvtár_útvonala&#39;);</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  }</span>
-</span><span class='line'><span class="x">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+```phpinline
+function mymodule_upload_form_submit($form_id, $form_values) {
+  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés<br/>
+  $file = file_check_upload('file_upload');
+  if ($file){</p>
+
+<pre><code>// Ha sikeres volt elmentjük az állományt a megadott könyvtárba
+$file = file_save_upload($file, 'cél_könyvtár_útvonala');
+</code></pre>
+
+<p>  }
+}
+```</p>
 
 <p>Eddig sétagalopp, a neheze akkor jön amikor valamilyen feltételnek megfelelő állományt szeretnénk, ha feltöltene a felhasználó. A példában várjunk egy képet, ami nem nagyobb mint 100x100 pixel, ha nagyobb méretezzük át.</p>
 
@@ -115,83 +79,48 @@ Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a hr
 
 <p>A form előállítása változatlan. Az feltöltött állomány vizsgálatát a form validate függvényben végezzük el. A submit függvényben a képet átméretezzük, ha nagyobb mint a megengedett, majd elmentjük a megadott könyvtárba.
 Validate függvény:
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_validate($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés&lt;br/&gt;</span>
-</span><span class='line'><span class="x">  $file = file_check_upload(&#39;file_upload&#39;);&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  // Létezik-e a feltöltött állomány</span>
-</span><span class='line'><span class="x">  if ( isset($file-&gt;filepath) ) {&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;// Megnézzük, hogy kép-e</span>
-</span><span class='line'><span class="x">$info = image_get_info($file-&amp;gt;filepath);</span>
-</span><span class='line'><span class="x">if (!$info || !$info[&#39;extension&#39;]) {</span>
-</span><span class='line'><span class="x">  form_set_error(&#39;file_upload&#39;, t(&#39;The uploaded file was not an image.&#39;));</span>
-</span><span class='line'><span class="x">}</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+```phpinline
+function mymodule_upload_form_validate($form_id, $form_values) {
+  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés<br/>
+  $file = file_check_upload('file_upload');</p>
+
+<p>  // Létezik-e a feltöltött állomány
+  if ( isset($file->filepath) ) {</p>
+
+<pre><code>// Megnézzük, hogy kép-e
+$info = image_get_info($file-&gt;filepath);
+if (!$info || !$info['extension']) {
+  form_set_error('file_upload', t('The uploaded file was not an image.'));
+}
+</code></pre>
+
+<p>}
+<code>
 Submit függvény:
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  // Ellenőrizzük le, hogy sikeres volt-e a feltöltés&lt;br/&gt;</span>
-</span><span class='line'><span class="x">  $file = file_check_upload(&#39;file_upload&#39;);&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  // Létezik-e a feltöltött állomány</span>
-</span><span class='line'><span class="x">  if ( isset($file-&gt;filepath) ) {&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;// Kép méret ellenőrzése</span>
-</span><span class='line'><span class="x">list($maxwidth, $maxheight) = explode(&#39;x&#39;, &#39;100x100&#39;);</span>
-</span><span class='line'><span class="x">if ($info[&#39;width&#39;] &amp;gt; $maxwidth || $info[&#39;height&#39;] &amp;gt; $maxheight) {</span>
-</span><span class='line'><span class="x">  // Átméretezés</span>
-</span><span class='line'><span class="x">  image_scale($file-&amp;gt;filepath, $file-&amp;gt;filepath, $maxwidth, $maxheight);</span>
-</span><span class='line'><span class="x">  // Informáljuk a felhasználót az eseményről.</span>
-</span><span class='line'><span class="x">  drupal_set_message(t(&#39;The image was resized to fit within the maximum allowed dimensions of %dimensions pixels.&#39;, array(&#39;%dimensions&#39; =&amp;gt; &#39;100x100&#39;));</span>
-</span><span class='line'><span class="x">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">// Állomány elmentése a megadott helyre.</span>
-</span><span class='line'><span class="x">$file = file_save_upload($file, &#39;cél_könyvtár_útvonala&#39;);</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  }</span>
-</span><span class='line'><span class="x">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</code>phpinline
+function mymodule_upload_form_submit($form_id, $form_values) {
+  // Ellenőrizzük le, hogy sikeres volt-e a feltöltés<br/>
+  $file = file_check_upload('file_upload');</p>
+
+<p>  // Létezik-e a feltöltött állomány
+  if ( isset($file->filepath) ) {</p>
+
+<pre><code>// Kép méret ellenőrzése
+list($maxwidth, $maxheight) = explode('x', '100x100');
+if ($info['width'] &gt; $maxwidth || $info['height'] &gt; $maxheight) {
+  // Átméretezés
+  image_scale($file-&gt;filepath, $file-&gt;filepath, $maxwidth, $maxheight);
+  // Informáljuk a felhasználót az eseményről.
+  drupal_set_message(t('The image was resized to fit within the maximum allowed dimensions of %dimensions pixels.', array('%dimensions' =&gt; '100x100'));
+}
+
+// Állomány elmentése a megadott helyre.
+$file = file_save_upload($file, 'cél_könyvtár_útvonala');
+</code></pre>
+
+<p>  }
+}
+```</p>
 
 <p>Aki ismeri a drupal 6 állomány kezelését az tudja, hogy ott már adatbázisban tárolja le az állományok adatait. Adatbázis drupal 5-ben is rendelkezésre áll csak kicsit más a szerkezete, és picit más célokra szolgál. Mi magunk is írhatunk az adatbázisba, ha szeretnénk ott is tárolni az állományaink adatait. Arra azonban figyeljünk, hogy az ötös verzióban magunknak kell gondoskodni az állományok törléséről mind a lemezről mind az adatbázisból (ha használjuk).</p>
 
@@ -200,126 +129,73 @@ Submit függvény:
 <h2><a name="drupal_6">Drupal 6</a></h2>
 
 <p>Hozzuk létre a form függvényünket a következő kép:
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form() {</span>
-</span><span class='line'><span class="x">  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
-</span><span class='line'><span class="x">  $form[&#39;#attributes&#39;] = array(&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;&#39;enctype&#39; =&amp;gt; &quot;multipart/form-data&quot;</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  );&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  $form[&#39;file_upload&#39;] = array(&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;&#39;#type&#39; =&amp;gt; &#39;file&#39;,</span>
-</span><span class='line'><span class="x">&#39;#title&#39; =&amp;gt; t(&#39;Filename&#39;),</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  );&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  $form[&#39;submit&#39;] = array(&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;&#39;#type&#39; =&amp;gt; &#39;submit&#39;,</span>
-</span><span class='line'><span class="x">&#39;#value&#39; =&amp;gt; t(&#39;Upload file&#39;),</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  );&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  return $form;</span>
-</span><span class='line'><span class="x">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+```phpinline
+function mymodule_upload_form() {
+  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány
+  $form['#attributes'] = array(</p>
+
+<pre><code>'enctype' =&gt; "multipart/form-data"
+</code></pre>
+
+<p>  );</p>
+
+<p>  $form['file_upload'] = array(</p>
+
+<pre><code>'#type' =&gt; 'file',
+'#title' =&gt; t('Filename'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  $form['submit'] = array(</p>
+
+<pre><code>'#type' =&gt; 'submit',
+'#value' =&gt; t('Upload file'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  return $form;
+}
+```</p>
 
 <p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  //Állomány feltöltése</span>
-</span><span class='line'><span class="x">  if ( $file = file_save_upload(&#39;file_upload&#39;, array(), &#39;cél_könyvtár_útvonala&#39; ) ) {&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
-</span><span class='line'><span class="x">file_set_status($file, FILE_STATUS_PERMANENT);</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  }</span>
-</span><span class='line'><span class="x">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+```phpinline
+function mymodule_upload_form_submit($form_id, $form_values) {
+  //Állomány feltöltése
+  if ( $file = file_save_upload('file_upload', array(), 'cél_könyvtár_útvonala' ) ) {</p>
+
+<pre><code>//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.
+file_set_status($file, FILE_STATUS_PERMANENT);
+</code></pre>
+
+<p>  }
+}
+```</p>
 
 <p>Készítsük el a fenti példa drupal 6-os változatát. A feladat várjunk egy képet, ami nem nagyobb mint 100x100 pixel, ha nagyobb méretezzük át.
 Ebben az esetben nem kell validate függvényt írnunk, mert egy lépésben megtehetjük a submit részben.
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  //Az feltöltött állomány validációs feltételei.</span>
-</span><span class='line'><span class="x">  $validators = array(&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;&#39;file_validate_is_image&#39; =&amp;gt; array(),</span>
-</span><span class='line'><span class="x">&#39;file_validate_image_resolution&#39; =&amp;gt; array(&#39;100x100&#39;),</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  );&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  //Állomány feltöltése, validációval</span>
-</span><span class='line'><span class="x">  if ( $file = file_save_upload(&#39;file_upload&#39;, $validators, &#39;cél_könyvtár_útvonala&#39; ) ) {&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
-</span><span class='line'><span class="x">file_set_status($file, FILE_STATUS_PERMANENT);</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;  }</span>
-</span><span class='line'><span class="x">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+```phpinline
+function mymodule_upload_form_submit($form_id, $form_values) {
+  //Az feltöltött állomány validációs feltételei.
+  $validators = array(</p>
+
+<pre><code>'file_validate_is_image' =&gt; array(),
+'file_validate_image_resolution' =&gt; array('100x100'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  //Állomány feltöltése, validációval
+  if ( $file = file_save_upload('file_upload', $validators, 'cél_könyvtár_útvonala' ) ) {</p>
+
+<pre><code>//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.
+file_set_status($file, FILE_STATUS_PERMANENT);
+</code></pre>
+
+<p>  }
+}
+```</p>
 
 <p>A <a href="http://api.drupal.org/api/function/file_save_upload">file_save_upload</a> függvényről az <a href="http://api.drupal.org">http://api.drupal.org</a> oldalon van részletesebb leírás.</p>
 

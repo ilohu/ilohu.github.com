@@ -4,7 +4,7 @@
   <title><![CDATA[Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2012-10-28T21:54:24+01:00</updated>
+  <updated>2012-10-29T19:07:16+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -48,14 +48,14 @@ Közben készül egy másik modul is ami a webform modulra épül és itt már n
 <p>Én a következőt csináltam Finder segítségével felcsatoltam a távoli megosztást, nalam backup névre hallgat.
 Ezután indítottam egy terminált, majd kiadtam az alábbi parancsot:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>defaults write com.apple.systempreferences TMShowUnsupportedNetworkVolumes 1
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Létrehoztam a /tmp könyvtárba egy backup könyvtárat és ide hoztam létre a Time Machine imaget.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir /tmp/backup
 </span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/backup
@@ -64,7 +64,7 @@ Ezután indítottam egy terminált, majd kiadtam az alábbi parancsot:</p>
 
 <p>Letöltöttem a makeImage.sh scriptet ami létre hozza a megfelelő méretű partíciót. Meg kell adni paraméterben a lemez méretét (én 320GB-ot szánok erre) és a felcsatolt megosztast helyét (nalam a /Volumes/backup könyvtár).</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget http://mikestaszel.com/files/tonido/makeImage.sh
 </span><span class='line'><span class="nv">$ </span>./sh makeImage.sh 320 /Volumes/backup
@@ -73,24 +73,25 @@ Ezután indítottam egy terminált, majd kiadtam az alábbi parancsot:</p>
 
 <p>A parancs futtatása közben hibaüzeneteket kaptam, de a végeredmény jó lett. Íme a kapott (hiba)üzenetek:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>service: This command still works, but it is deprecated. Please use launchctl(8) instead.
-</span><span class='line'>service: This command still works, but it is deprecated. Please use launchctl(8) instead.
-</span><span class='line'>service: This command still works, but it is deprecated. Please use launchctl(8) instead.
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>service: This <span class="nb">command </span>still works, but it is deprecated. Please use launchctl<span class="o">(</span>8<span class="o">)</span> instead.
+</span><span class='line'>service: This <span class="nb">command </span>still works, but it is deprecated. Please use launchctl<span class="o">(</span>8<span class="o">)</span> instead.
+</span><span class='line'>service: This <span class="nb">command </span>still works, but it is deprecated. Please use launchctl<span class="o">(</span>8<span class="o">)</span> instead.
 </span><span class='line'>Generating disk image MyMAC.sparsebundle with size 320GB ... Ignore errors any errors as it should work anyway ...done!
-</span><span class='line'>Generating property list file with uuid A2BB49BB-7736-52F4-8E9E-8F5947322F8F ... done!
-</span><span class='line'>Copying MyMAC.sparsebundle to /Volumes/backup/ ...</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>Generating property list file with uuid A2BB49BB-7736-52F4-8E9E-8F5947322F8F ... <span class="k">done</span>!
+</span><span class='line'>Copying MyMAC.sparsebundle to /Volumes/backup/ ...
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>A MyMAC helyett a számítógépünk neve fog szerepelni.
 A script a létrehozott MyMAC.sparsebundle könyvtárat a /Volumes/backup/ könyvtárba másolja. Ha valamilyen ok miatt ezt újra szeretnénk másolni, akkor az alábbi paranccsal tehetjuk meg.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/backup
 </span><span class='line'><span class="nv">$ </span>cp -pfr MyMAC.sparsebundle /Volumes/backup/MyMAC.sparsebundle
@@ -102,7 +103,7 @@ Ha sikeresen lement a mentes töröljük a /tmp/backup könyvtárat.</p>
 
 <p>Zárójelben jegyzem meg, hogy nálam volt valami gubanc, mert 8-20GB mentése után valamiért megállt és nem volt hajlandó tovább lépni. Én egy olyan trükköt csináltam, hogy egy szimbolikus linket hoztam létre a távoli meghajtón, ami a /tmp/backup konyvtárban található lemezre mutatott (épp volt annyi helyem, hogy ráférjen a mentés), így erre készült el a mentés teljes mentés, miután ez sikeres volt felmásoltam a megosztásra, így már a következő mentés szépen lefutott.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/backup
 </span><span class='line'><span class="nv">$ </span>ln -s MyMAC.sparsebundle /Volumes/backup/MyMAC.sparsebundle
@@ -138,7 +139,7 @@ A most következő példában egy ilyen modul elkészítését mutatom meg a mys
 
 <p>A feltelepített drupal sites/all/modules alkönyvtárába hozzuk létre a mysite könyvtárat.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /var/www/drupal/
 </span><span class='line'>mkdir -p sites/all/modules/mysite
@@ -148,7 +149,7 @@ A most következő példában egy ilyen modul elkészítését mutatom meg a mys
 <p>A modul létrehozásához minimum két állomány szükséges egy mysite.info és egy mysite.module, ha szeretnénk a modul telepítésekor műveleteket végezni, akkor szükségünk lesz egy mysite.install állományra is (nekünk most nem kell).
 Létrehozzuk mindegyik állományt. Kezdjük a mysite.info állománnyal, ennek a tartalma a következő legyen:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">name</span> <span class="o">=</span> mysite
@@ -163,7 +164,7 @@ A core opció a drupal verziót határozza meg, ha 6-os drupalhoz készítjük a
 <p>Az info állomány elkészítése után a mysite.module állományunkat kell elkészíteni.
 Az állomány tartalma legyen a következő:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -203,7 +204,7 @@ Az állomány tartalma legyen a következő:</p>
 
 <p>Adjuk ki a következő parancsot:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install slapd ldap-utils
 </span></code></pre></td></tr></table></div></figure>
 
@@ -219,7 +220,7 @@ No para, irány az /etc/ldap/ könyvtár és írjuk be a jelszót a slapd.conf �
 <p>Ezen az oldalon található a következő script amit lefuttatva elkészíti nekünk az adminisztrátor felhasználót és még néhány alapvető sémát is hozzáad a szerverhez, valamint egy kezdő ágat is létrehoz.
 A script:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -476,7 +477,7 @@ Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a hr
 
 <p>Form függvényünkben most csak egy állományt fogunk feltölteni:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -494,30 +495,30 @@ Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a hr
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form() {</span>
-</span><span class='line'><span class="x">  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
-</span><span class='line'><span class="x">  $form[&#39;#attributes&#39;] = array(</span>
-</span><span class='line'><span class="x">    &#39;enctype&#39; =&gt; &quot;multipart/form-data&quot;</span>
-</span><span class='line'><span class="x">  );</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;#attributes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;enctype&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;multipart/form-data&quot;</span>
+</span><span class='line'>  <span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">  $form[&#39;file_upload&#39;] = array(</span>
-</span><span class='line'><span class="x">    &#39;#type&#39; =&gt; &#39;file&#39;,</span>
-</span><span class='line'><span class="x">    &#39;#title&#39; =&gt; t(&#39;Filename&#39;),</span>
-</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;file_upload&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;#type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;#title&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Filename&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">  $form[&#39;submit&#39;] = array(</span>
-</span><span class='line'><span class="x">    &#39;#type&#39; =&gt; &#39;submit&#39;,</span>
-</span><span class='line'><span class="x">    &#39;#value&#39; =&gt; t(&#39;Upload file&#39;),</span>
-</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;#type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;submit&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;#value&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Upload file&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">  return $form;</span>
-</span><span class='line'><span class="x">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nv">$form</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -525,14 +526,14 @@ Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a hr
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
-</span><span class='line'><span class="x">  $file = file_check_upload(&#39;file_upload&#39;);</span>
-</span><span class='line'><span class="x">  if ($file){</span>
-</span><span class='line'><span class="x">    // Ha sikeres volt elmentjük az állományt a megadott könyvtárba</span>
-</span><span class='line'><span class="x">    $file = file_save_upload($file, &#39;cél_könyvtár_útvonala&#39;);</span>
-</span><span class='line'><span class="x">  }</span>
-</span><span class='line'><span class="x">}</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_submit</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
+</span><span class='line'>  <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_check_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nv">$file</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">// Ha sikeres volt elmentjük az állományt a megadott könyvtárba</span>
+</span><span class='line'>    <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_save_upload</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="s1">&#39;cél_könyvtár_útvonala&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -543,7 +544,7 @@ Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a hr
 <p>A form előállítása változatlan. Az feltöltött állomány vizsgálatát a form validate függvényben végezzük el. A submit függvényben a képet átméretezzük, ha nagyobb mint a megengedett, majd elmentjük a megadott könyvtárba.
 Validate függvény:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -555,24 +556,24 @@ Validate függvény:</p>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_validate($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
-</span><span class='line'><span class="x">  $file = file_check_upload(&#39;file_upload&#39;);</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_validate</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
+</span><span class='line'>  <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_check_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">  // Létezik-e a feltöltött állomány</span>
-</span><span class='line'><span class="x">  if ( isset($file-&gt;filepath) ) {</span>
-</span><span class='line'><span class="x">    // Megnézzük, hogy kép-e</span>
-</span><span class='line'><span class="x">    $info = image_get_info($file-&gt;filepath);</span>
-</span><span class='line'><span class="x">    if (!$info || !$info[&#39;extension&#39;]) {</span>
-</span><span class='line'><span class="x">      form_set_error(&#39;file_upload&#39;, t(&#39;The uploaded file was not an image.&#39;));</span>
-</span><span class='line'><span class="x">    }</span>
-</span><span class='line'><span class="x">}</span>
+</span><span class='line'>  <span class="c1">// Létezik-e a feltöltött állomány</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Megnézzük, hogy kép-e</span>
+</span><span class='line'>    <span class="nv">$info</span> <span class="o">=</span> <span class="nx">image_get_info</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$info</span> <span class="o">||</span> <span class="o">!</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;extension&#39;</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">form_set_error</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">,</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;The uploaded file was not an image.&#39;</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Submit függvény:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -591,25 +592,25 @@ Validate függvény:</p>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  // Ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
-</span><span class='line'><span class="x">  $file = file_check_upload(&#39;file_upload&#39;);</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_submit</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
+</span><span class='line'>  <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_check_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">  // Létezik-e a feltöltött állomány</span>
-</span><span class='line'><span class="x">  if ( isset($file-&gt;filepath) ) {</span>
-</span><span class='line'><span class="x">    // Kép méret ellenőrzése</span>
-</span><span class='line'><span class="x">    list($maxwidth, $maxheight) = explode(&#39;x&#39;, &#39;100x100&#39;);</span>
-</span><span class='line'><span class="x">    if ($info[&#39;width&#39;] &gt; $maxwidth || $info[&#39;height&#39;] &gt; $maxheight) {</span>
-</span><span class='line'><span class="x">      // Átméretezés</span>
-</span><span class='line'><span class="x">      image_scale($file-&gt;filepath, $file-&gt;filepath, $maxwidth, $maxheight);</span>
-</span><span class='line'><span class="x">      // Informáljuk a felhasználót az eseményről.</span>
-</span><span class='line'><span class="x">      drupal_set_message(t(&#39;The image was resized to fit within the maximum allowed dimensions of %dimensions pixels.&#39;, array(&#39;%dimensions&#39; =&gt; &#39;100x100&#39;));</span>
-</span><span class='line'><span class="x">    }</span>
+</span><span class='line'>  <span class="c1">// Létezik-e a feltöltött állomány</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Kép méret ellenőrzése</span>
+</span><span class='line'>    <span class="k">list</span><span class="p">(</span><span class="nv">$maxwidth</span><span class="p">,</span> <span class="nv">$maxheight</span><span class="p">)</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;100x100&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nv">$maxwidth</span> <span class="o">||</span> <span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nv">$maxheight</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// Átméretezés</span>
+</span><span class='line'>      <span class="nx">image_scale</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">,</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">,</span> <span class="nv">$maxwidth</span><span class="p">,</span> <span class="nv">$maxheight</span><span class="p">);</span>
+</span><span class='line'>      <span class="c1">// Informáljuk a felhasználót az eseményről.</span>
+</span><span class='line'>      <span class="nx">drupal_set_message</span><span class="p">(</span><span class="nx">t</span><span class="p">(</span><span class="s1">&#39;The image was resized to fit within the maximum allowed dimensions of %dimensions pixels.&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;%dimensions&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100x100&#39;</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">    // Állomány elmentése a megadott helyre.</span>
-</span><span class='line'><span class="x">    $file = file_save_upload($file, &#39;cél_könyvtár_útvonala&#39;);</span>
-</span><span class='line'><span class="x">  }</span>
-</span><span class='line'><span class="x">}</span>
+</span><span class='line'>    <span class="c1">// Állomány elmentése a megadott helyre.</span>
+</span><span class='line'>    <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_save_upload</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="s1">&#39;cél_könyvtár_útvonala&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -621,7 +622,7 @@ Validate függvény:</p>
 
 <p>Hozzuk létre a form függvényünket a következő kép:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -639,50 +640,50 @@ Validate függvény:</p>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form() {</span>
-</span><span class='line'><span class="x">  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
-</span><span class='line'><span class="x">  $form[&#39;#attributes&#39;] = array(</span>
-</span><span class='line'><span class="x">    &#39;enctype&#39; =&gt; &quot;multipart/form-data&quot;</span>
-</span><span class='line'><span class="x">  );</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;#attributes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;enctype&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;multipart/form-data&quot;</span>
+</span><span class='line'>  <span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">  $form[&#39;file_upload&#39;] = array(</span>
-</span><span class='line'><span class="x">    &#39;#type&#39; =&gt; &#39;file&#39;,</span>
-</span><span class='line'><span class="x">    &#39;#title&#39; =&gt; t(&#39;Filename&#39;),</span>
-</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;file_upload&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;#type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;#title&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Filename&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">  $form[&#39;submit&#39;] = array(</span>
-</span><span class='line'><span class="x">    &#39;#type&#39; =&gt; &#39;submit&#39;,</span>
-</span><span class='line'><span class="x">    &#39;#value&#39; =&gt; t(&#39;Upload file&#39;),</span>
-</span><span class='line'><span class="x">  );</span>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;#type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;submit&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;#value&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Upload file&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">  return $form;</span>
-</span><span class='line'><span class="x">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nv">$form</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  //Állomány feltöltése</span>
-</span><span class='line'><span class="x">  if ( $file = file_save_upload(&#39;file_upload&#39;, array(), &#39;cél_könyvtár_útvonala&#39; ) ) {</span>
-</span><span class='line'><span class="x">    //Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
-</span><span class='line'><span class="x">    file_set_status($file, FILE_STATUS_PERMANENT);</span>
-</span><span class='line'><span class="x">  }</span>
-</span><span class='line'><span class="x">}</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_submit</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">//Állomány feltöltése</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_save_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(),</span> <span class="s1">&#39;cél_könyvtár_útvonala&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
+</span><span class='line'>    <span class="nx">file_set_status</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nx">FILE_STATUS_PERMANENT</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Készítsük el a fenti példa drupal 6-os változatát. A feladat várjunk egy képet, ami nem nagyobb mint 100x100 pixel, ha nagyobb méretezzük át.
 Ebben az esetben nem kell validate függvényt írnunk, mert egy lépésben megtehetjük a submit részben.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -695,19 +696,19 @@ Ebben az esetben nem kell validate függvényt írnunk, mert egy lépésben megt
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">function mymodule_upload_form_submit($form_id, $form_values) {</span>
-</span><span class='line'><span class="x">  //Az feltöltött állomány validációs feltételei. </span>
-</span><span class='line'><span class="x">  $validators = array(</span>
-</span><span class='line'><span class="x">    &#39;file_validate_is_image&#39; =&gt; array(),</span>
-</span><span class='line'><span class="x">    &#39;file_validate_image_resolution&#39; =&gt; array(&#39;100x100&#39;),</span>
-</span><span class='line'><span class="x">  );</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_submit</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">//Az feltöltött állomány validációs feltételei. </span>
+</span><span class='line'>  <span class="nv">$validators</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;file_validate_is_image&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
+</span><span class='line'>    <span class="s1">&#39;file_validate_image_resolution&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;100x100&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="x">  //Állomány feltöltése, validációval</span>
-</span><span class='line'><span class="x">  if ( $file = file_save_upload(&#39;file_upload&#39;, $validators, &#39;cél_könyvtár_útvonala&#39; ) ) {</span>
-</span><span class='line'><span class="x">    //Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
-</span><span class='line'><span class="x">    file_set_status($file, FILE_STATUS_PERMANENT);</span>
-</span><span class='line'><span class="x">  }</span>
-</span><span class='line'><span class="x">}</span>
+</span><span class='line'>  <span class="c1">//Állomány feltöltése, validációval</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_save_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">,</span> <span class="nv">$validators</span><span class="p">,</span> <span class="s1">&#39;cél_könyvtár_útvonala&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
+</span><span class='line'>    <span class="nx">file_set_status</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nx">FILE_STATUS_PERMANENT</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -754,14 +755,14 @@ You can watch Gabor Hojtsy&#8217;s presentation on Acquia Drupal Stack at Drupal
 <p>Fortunately MAMP contains a pre-compiled xdebug.so file, so you only need to enable it in php.ini. At the same time make sure that Zend optimizer is disabled because it does not work together with Xdebug.
 Edit php.ini using your favorite text editor:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/MAMP/conf/php5/php.ini
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Change the end of the file to this:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -809,7 +810,7 @@ Edit php.ini using your favorite text editor:</p>
 
 <p>Copy xdebug.so from MAMP to Acquia Drupal Stack:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /Applications/acquia-drupal/php/ext/
 </span><span class='line'>cp /Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so .
@@ -818,14 +819,14 @@ Edit php.ini using your favorite text editor:</p>
 
 <p>Open php.ini using your favorite text editor:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/acquia-drupal/php/bin/php.ini
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Add the following lines to the end:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -866,10 +867,11 @@ If you are not going to use them simultaneously then port 9000 is also fine here
 
 <p>If you use Acquia Drupal Stack, change PHP 5 Interpreter and Debugger Port settings respectively.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>PHP 5 Interpreter: /Applications/acquia-drupal/php/bin/php
-</span><span class='line'>Debugger Port: 9080</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="err">PHP</span> <span class="err">5</span> <span class="err">Interpreter:</span> <span class="err">/Applications/acquia-drupal/php/bin/php</span>
+</span><span class='line'><span class="err">Debugger</span> <span class="err">Port:</span> <span class="err">9080</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Web browser settings should look like this way:</p>
@@ -922,14 +924,14 @@ A szerver oldali környezetet még nem döntöttem el véglegesen, jelenleg két
 <p>A MAMP tartalmaz előre fordított xdebug.so állományt, ezt kapcsoljuk be a php.ini-ben, a zend optimizert ki kell kapcsolnunk ugyanitt, mert összeakad az Xdebuggal.
 Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/MAMP/conf/php5/php.ini
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Az állomány végét írjuk át ilyenre:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -977,7 +979,7 @@ Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
 <p>Másoljuk a MAMP-ban található xdebug.so-t az Acquia Drupal Stack-be:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /Applications/acquia-drupal/php/ext/
 </span><span class='line'>cp /Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so .
@@ -986,14 +988,14 @@ Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
 <p>Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/acquia-drupal/php/bin/php.ini
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Az állomány végére írjuk be a következőt:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1033,10 +1035,11 @@ Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
 <p>Acquia Drupal Stack esetén a PHP 5 Interpreter és a Debugger Portot kell átírni.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>PHP 5 Interpreter: /Applications/acquia-drupal/php/bin/php
-</span><span class='line'>Debugger Port: 9080</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="err">PHP</span> <span class="err">5</span> <span class="err">Interpreter:</span> <span class="err">/Applications/acquia-drupal/php/bin/php</span>
+</span><span class='line'><span class="err">Debugger</span> <span class="err">Port:</span> <span class="err">9080</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>A böngésző beállítások így nézzenek ki:</p>

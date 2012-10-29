@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Module | Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/categories/module/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2012-10-28T21:54:24+01:00</updated>
+  <updated>2012-10-29T19:07:16+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -42,47 +42,35 @@ A most következő példában egy ilyen modul elkészítését mutatom meg a mys
 <p>A drupalban a modulok neve csak olyan karaktereket tartalmazhat, ami egy PHP függvény nevében is megadható, mivel a modul neve minden modulban létrehozott függvény nevében szerepelni fog.</p>
 
 <p>A feltelepített drupal sites/all/modules alkönyvtárába hozzuk létre a mysite könyvtárat.
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /var/www/drupal/
-</span><span class='line'>mkdir -p sites/all/modules/mysite
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<code>bash
+cd /var/www/drupal/
+mkdir -p sites/all/modules/mysite
+</code></p>
 
 <p>A modul létrehozásához minimum két állomány szükséges egy mysite.info és egy mysite.module, ha szeretnénk a modul telepítésekor műveleteket végezni, akkor szükségünk lesz egy mysite.install állományra is (nekünk most nem kell).
 Létrehozzuk mindegyik állományt. Kezdjük a mysite.info állománnyal, ennek a tartalma a következő legyen:
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">name</span> <span class="o">=</span> mysite
-</span><span class='line'><span class="nv">description</span> <span class="o">=</span> A mysite oldalon végzett módosításokat tartalmazza.
-</span><span class='line'><span class="nv">core</span> <span class="o">=</span> 7.x
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<code>bash
+name = mysite
+description = A mysite oldalon végzett módosításokat tartalmazza.
+core = 7.x
+</code>
 A name a modul neve, a description a modul leírását tartalmazza, ezeket az értékeket kötelező megadni, de az info állományba megadhatunk még modul függőséget php és drupal verziót, az alábbi oldalon megtaláljuk a többi lehetőséget is: <a href="http://drupal.org/node/231036">http://drupal.org/node/231036</a>
 A core opció a drupal verziót határozza meg, ha 6-os drupalhoz készítjük a 7.x-et 6.x-re cseréljük.</p>
 
 <p>Az info állomány elkészítése után a mysite.module állományunkat kell elkészíteni.
 Az állomány tartalma legyen a következő:
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">&amp;lt;?php</span>
-</span><span class='line'><span class="x">/&lt;em&gt;*</span>
-</span><span class='line'><span class="x"> * hook_init() implementálása</span>
-</span><span class='line'><span class="x"> &lt;/em&gt;/</span>
-</span><span class='line'><span class="x">function mysite_init() {&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;drupal_set_message(t(&#39;New message&#39;));</span>
-</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;p&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+```php
+&lt;?php
+/<em>*
+ * hook_init() implementálása
+ </em>/
+function mysite_init() {</p>
+
+<pre><code>drupal_set_message(t('New message'));
+</code></pre>
+
+<p>}
+```</p>
 
 <p>A module állományban a <a href="http://api.drupal.org/api/function/hook_init/6">hook_init</a> hurkot implementáltuk. A szöveg kiíratására pedig a <a href="http://api.drupal.org/api/function/drupal_set_message/6">drupal_set_message()</a> függvény segítségével történt. A <a href="http://api.drupal.org/api/function/t/6">t()</a> függvény fordítja le a szöveget az oldal nyelvére.</p>
 ]]></content>

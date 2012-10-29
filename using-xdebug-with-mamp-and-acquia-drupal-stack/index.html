@@ -101,14 +101,14 @@ You can watch Gabor Hojtsy&#8217;s presentation on Acquia Drupal Stack at Drupal
 <p>Fortunately MAMP contains a pre-compiled xdebug.so file, so you only need to enable it in php.ini. At the same time make sure that Zend optimizer is disabled because it does not work together with Xdebug.
 Edit php.ini using your favorite text editor:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/MAMP/conf/php5/php.ini
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Change the end of the file to this:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -156,7 +156,7 @@ Edit php.ini using your favorite text editor:</p>
 
 <p>Copy xdebug.so from MAMP to Acquia Drupal Stack:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /Applications/acquia-drupal/php/ext/
 </span><span class='line'>cp /Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so .
@@ -165,14 +165,14 @@ Edit php.ini using your favorite text editor:</p>
 
 <p>Open php.ini using your favorite text editor:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/acquia-drupal/php/bin/php.ini
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Add the following lines to the end:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -213,10 +213,11 @@ If you are not going to use them simultaneously then port 9000 is also fine here
 
 <p>If you use Acquia Drupal Stack, change PHP 5 Interpreter and Debugger Port settings respectively.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>PHP 5 Interpreter: /Applications/acquia-drupal/php/bin/php
-</span><span class='line'>Debugger Port: 9080</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="err">PHP</span> <span class="err">5</span> <span class="err">Interpreter:</span> <span class="err">/Applications/acquia-drupal/php/bin/php</span>
+</span><span class='line'><span class="err">Debugger</span> <span class="err">Port:</span> <span class="err">9080</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Web browser settings should look like this way:</p>

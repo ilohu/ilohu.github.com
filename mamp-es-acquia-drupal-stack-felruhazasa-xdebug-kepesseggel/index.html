@@ -98,14 +98,14 @@ A szerver oldali környezetet még nem döntöttem el véglegesen, jelenleg két
 <p>A MAMP tartalmaz előre fordított xdebug.so állományt, ezt kapcsoljuk be a php.ini-ben, a zend optimizert ki kell kapcsolnunk ugyanitt, mert összeakad az Xdebuggal.
 Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/MAMP/conf/php5/php.ini
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Az állomány végét írjuk át ilyenre:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -153,7 +153,7 @@ Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
 <p>Másoljuk a MAMP-ban található xdebug.so-t az Acquia Drupal Stack-be:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /Applications/acquia-drupal/php/ext/
 </span><span class='line'>cp /Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so .
@@ -162,14 +162,14 @@ Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
 <p>Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>nano /Applications/acquia-drupal/php/bin/php.ini
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Az állomány végére írjuk be a következőt:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -209,10 +209,11 @@ Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
 <p>Acquia Drupal Stack esetén a PHP 5 Interpreter és a Debugger Portot kell átírni.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>PHP 5 Interpreter: /Applications/acquia-drupal/php/bin/php
-</span><span class='line'>Debugger Port: 9080</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="err">PHP</span> <span class="err">5</span> <span class="err">Interpreter:</span> <span class="err">/Applications/acquia-drupal/php/bin/php</span>
+</span><span class='line'><span class="err">Debugger</span> <span class="err">Port:</span> <span class="err">9080</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>A böngésző beállítások így nézzenek ki:</p>
@@ -363,19 +364,6 @@ Nyissuk meg kedvenc szövegszerkesztőnkkel a php.ini állományt:</p>
 
 </footer>
   
-
-<script type="text/javascript">
-      var disqus_shortname = 'ilohu';
-      
-        
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 
 
 

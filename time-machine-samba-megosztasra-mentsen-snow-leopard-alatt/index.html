@@ -93,14 +93,14 @@
 <p>Én a következőt csináltam Finder segítségével felcsatoltam a távoli megosztást, nalam backup névre hallgat.
 Ezután indítottam egy terminált, majd kiadtam az alábbi parancsot:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>defaults write com.apple.systempreferences TMShowUnsupportedNetworkVolumes 1
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Létrehoztam a /tmp könyvtárba egy backup könyvtárat és ide hoztam létre a Time Machine imaget.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir /tmp/backup
 </span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/backup
@@ -109,7 +109,7 @@ Ezután indítottam egy terminált, majd kiadtam az alábbi parancsot:</p>
 
 <p>Letöltöttem a makeImage.sh scriptet ami létre hozza a megfelelő méretű partíciót. Meg kell adni paraméterben a lemez méretét (én 320GB-ot szánok erre) és a felcsatolt megosztast helyét (nalam a /Volumes/backup könyvtár).</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget http://mikestaszel.com/files/tonido/makeImage.sh
 </span><span class='line'><span class="nv">$ </span>./sh makeImage.sh 320 /Volumes/backup
@@ -118,24 +118,25 @@ Ezután indítottam egy terminált, majd kiadtam az alábbi parancsot:</p>
 
 <p>A parancs futtatása közben hibaüzeneteket kaptam, de a végeredmény jó lett. Íme a kapott (hiba)üzenetek:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>service: This command still works, but it is deprecated. Please use launchctl(8) instead.
-</span><span class='line'>service: This command still works, but it is deprecated. Please use launchctl(8) instead.
-</span><span class='line'>service: This command still works, but it is deprecated. Please use launchctl(8) instead.
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>service: This <span class="nb">command </span>still works, but it is deprecated. Please use launchctl<span class="o">(</span>8<span class="o">)</span> instead.
+</span><span class='line'>service: This <span class="nb">command </span>still works, but it is deprecated. Please use launchctl<span class="o">(</span>8<span class="o">)</span> instead.
+</span><span class='line'>service: This <span class="nb">command </span>still works, but it is deprecated. Please use launchctl<span class="o">(</span>8<span class="o">)</span> instead.
 </span><span class='line'>Generating disk image MyMAC.sparsebundle with size 320GB ... Ignore errors any errors as it should work anyway ...done!
-</span><span class='line'>Generating property list file with uuid A2BB49BB-7736-52F4-8E9E-8F5947322F8F ... done!
-</span><span class='line'>Copying MyMAC.sparsebundle to /Volumes/backup/ ...</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>Generating property list file with uuid A2BB49BB-7736-52F4-8E9E-8F5947322F8F ... <span class="k">done</span>!
+</span><span class='line'>Copying MyMAC.sparsebundle to /Volumes/backup/ ...
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>A MyMAC helyett a számítógépünk neve fog szerepelni.
 A script a létrehozott MyMAC.sparsebundle könyvtárat a /Volumes/backup/ könyvtárba másolja. Ha valamilyen ok miatt ezt újra szeretnénk másolni, akkor az alábbi paranccsal tehetjuk meg.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/backup
 </span><span class='line'><span class="nv">$ </span>cp -pfr MyMAC.sparsebundle /Volumes/backup/MyMAC.sparsebundle
@@ -147,7 +148,7 @@ Ha sikeresen lement a mentes töröljük a /tmp/backup könyvtárat.</p>
 
 <p>Zárójelben jegyzem meg, hogy nálam volt valami gubanc, mert 8-20GB mentése után valamiért megállt és nem volt hajlandó tovább lépni. Én egy olyan trükköt csináltam, hogy egy szimbolikus linket hoztam létre a távoli meghajtón, ami a /tmp/backup konyvtárban található lemezre mutatott (épp volt annyi helyem, hogy ráférjen a mentés), így erre készült el a mentés teljes mentés, miután ez sikeres volt felmásoltam a megosztásra, így már a következő mentés szépen lefutott.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp/backup
 </span><span class='line'><span class="nv">$ </span>ln -s MyMAC.sparsebundle /Volumes/backup/MyMAC.sparsebundle
