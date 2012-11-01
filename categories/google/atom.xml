@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Google | Drupal kattintgatás nélkül]]></title>
+  <link href="http://ilo.hu/categories/google/atom.xml" rel="self"/>
+  <link href="http://ilo.hu/"/>
+  <updated>2012-11-01T11:30:16+01:00</updated>
+  <id>http://ilo.hu/</id>
+  <author>
+    <name><![CDATA[York]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Imapsync Courier to Gmail]]></title>
+    <link href="http://ilo.hu/imapsync-courier-to-gmail/"/>
+    <updated>2012-10-30T22:21:00+01:00</updated>
+    <id>http://ilo.hu/imapsync-courier-to-gmail</id>
+    <content type="html"><![CDATA[<h2>Imapsync beszerzése</h2>
+
+<p>A programot a GitHub-ról töltsük le: <a href="https://github.com/imapsync/imapsync">https://github.com/imapsync/imapsync</a>.</p>
+
+<!-- more -->
+
+
+<h2>Telepítés</h2>
+
+<p>Ay imapsync futtatásához telepíteni kell néhány perl csomagot az alábbi módon:
+<code>sh
+apt-get install libmail-imapclient-perl libdigest-md5-file-perl libterm-readkey-perl libio-socket-ssl-perl libfile-spec-perl libdigest-hmac-perl
+</code>
+Szükségünk van még néhány perl csomagra ami nem elérhető debian csomagként, ezeket CPAN-ról telepítjük:
+<code>sh
+perl -MCPAN -e 'install Authen::NTLM'
+perl -MCPAN -e 'install Time::HiRes'
+</code>
+(<a href="http://imapsync.lamiral.info/INSTALL">Angol nyelvű telepítési utmutató</a>)</p>
+
+<h2>Üzembe helyezés</h2>
+
+<p>Lépjünk be a kicsomagolt imapsync könyvtárba és ellenőrizzük, hogy sikeresen telepítettük a hozzávalókat az alábbi paranccsal:
+<code>sh
+perl -c imapsync
+</code>
+A kimeneten a következő üzenetet kell látnunk:
+<code>
+imapsync syntax OK
+</code></p>
+
+<p>Ezután adjuk ki a következő parancsot:
+<code>sh
+sudo make install
+</code></p>
+
+<h2>IMAP2GMAIL</h2>
+
+<p>Az (otelconsulting.com blogján)[http://blog.otelconsulting.com/2010/01/imapsync-to-gmail-script/] találtam egy jó kis scriptet amin csak apróságokat kellett módosítani, íme:
+TODO: Ami itt van feltehetnem gist.github.com-ra is...
+```sh</p>
+
+<h1>!/bin/sh</h1>
+
+<h1>Configure User</h1>
+
+<p>SERVER1=imap.anotherserver.com
+UNAME1=demo@anotherserver.com
+PWORD1=54321
+SERVER2=imap.gmail.com
+UNAME2=demo@gmail.com
+PWORD2=12345</p>
+
+<h1>Blank this out if you want to see folder sizes</h1>
+
+<p>imapsync --syncinternaldates --useheader 'Message-Id' \
+--host1 ${SERVER1} --user1 ${UNAME1} \
+--password1 ${PWORD1} --ssl1 \
+--host2 ${SERVER2} \
+--port2 993 --user2 ${UNAME2} \
+--password2 ${PWORD2} --ssl2 \
+--authmech1 LOGIN --authmech2 LOGIN --split1 200 --split2 200 ${HIDE} \
+--exclude 'Drafts|Trash|Spam|Sent|INBOX.Drafts|INBOX.Trash|INBOX.Spam|INBOX.Sent' \
+--exitwhenover 500000000</p>
+
+<h1>TO Sync Special Folders to Gmail</h1>
+
+<p>imapsync --syncinternaldates --useheader 'Message-Id' \
+--host1 ${SERVER1} --user1 ${UNAME1} \
+--password1 ${PWORD1} --ssl1 \
+--host2 ${SERVER2} \
+--port2 993 --user2 ${UNAME2} \
+--password2 ${PWORD2} --ssl2 \
+--ssl2 --noauthmd5 --split1 200 --split2 200 ${HIDE} \
+--folder "INBOX.Sent" --prefix2 '[Gmail]/' --regextrans2 's/INBOX.Sent/Sent Mail/' \
+--folder "INBOX.Spam" --prefix2 '[Gmail]/' --regextrans2 's/INBOX.Spam/Spam/' \
+--folder "INBOX.Trash" --prefix2 '[Gmail]/' --regextrans2 's/INBOX.Trash/Trash/' \
+--folder "INBOX.Drafts" --prefix2 '[Gmail]/' --regextrans2 's/INBOX.Drafts/Drafts/' \
+--exitwhenover 500000000<br/>
+```</p>
+
+<p>Kapcsolodó tartalom:</p>
+
+<ul>
+<li><a href="http://seagrief.co.uk/2010/12/moving-to-google-apps-with-imapsync">http://seagrief.co.uk/2010/12/moving-to-google-apps-with-imapsync</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

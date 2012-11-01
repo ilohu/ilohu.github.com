@@ -4,7 +4,7 @@
   <title><![CDATA[Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2012-10-29T19:07:16+01:00</updated>
+  <updated>2012-11-01T11:30:16+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -12,6 +12,146 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Imapsync Courier to Gmail]]></title>
+    <link href="http://ilo.hu/imapsync-courier-to-gmail/"/>
+    <updated>2012-10-30T22:21:00+01:00</updated>
+    <id>http://ilo.hu/imapsync-courier-to-gmail</id>
+    <content type="html"><![CDATA[<h2>Imapsync beszerzése</h2>
+
+<p>A programot a GitHub-ról töltsük le: <a href="https://github.com/imapsync/imapsync">https://github.com/imapsync/imapsync</a>.</p>
+
+<!-- more -->
+
+
+<h2>Telepítés</h2>
+
+<p>Ay imapsync futtatásához telepíteni kell néhány perl csomagot az alábbi módon:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>apt-get install libmail-imapclient-perl libdigest-md5-file-perl libterm-readkey-perl libio-socket-ssl-perl libfile-spec-perl libdigest-hmac-perl
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Szükségünk van még néhány perl csomagra ami nem elérhető debian csomagként, ezeket CPAN-ról telepítjük:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>perl -MCPAN -e <span class="s1">&#39;install Authen::NTLM&#39;</span>
+</span><span class='line'>perl -MCPAN -e <span class="s1">&#39;install Time::HiRes&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(<a href="http://imapsync.lamiral.info/INSTALL">Angol nyelvű telepítési utmutató</a>)</p>
+
+<h2>Üzembe helyezés</h2>
+
+<p>Lépjünk be a kicsomagolt imapsync könyvtárba és ellenőrizzük, hogy sikeresen telepítettük a hozzávalókat az alábbi paranccsal:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>perl -c imapsync
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A kimeneten a következő üzenetet kell látnunk:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>imapsync syntax OK
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ezután adjuk ki a következő parancsot:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>IMAP2GMAIL</h2>
+
+<p>Az (otelconsulting.com blogján)[http://blog.otelconsulting.com/2010/01/imapsync-to-gmail-script/] találtam egy jó kis scriptet amin csak apróságokat kellett módosítani, íme:
+TODO: Ami itt van feltehetnem gist.github.com-ra is&#8230;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#Configure User</span>
+</span><span class='line'><span class="nv">SERVER1</span><span class="o">=</span>imap.anotherserver.com
+</span><span class='line'><span class="nv">UNAME1</span><span class="o">=</span>demo@anotherserver.com
+</span><span class='line'><span class="nv">PWORD1</span><span class="o">=</span>54321
+</span><span class='line'><span class="nv">SERVER2</span><span class="o">=</span>imap.gmail.com
+</span><span class='line'><span class="nv">UNAME2</span><span class="o">=</span>demo@gmail.com
+</span><span class='line'><span class="nv">PWORD2</span><span class="o">=</span>12345
+</span><span class='line'>
+</span><span class='line'><span class="c">#Blank this out if you want to see folder sizes</span>
+</span><span class='line'>imapsync --syncinternaldates --useheader <span class="s1">&#39;Message-Id&#39;</span> <span class="se">\</span>
+</span><span class='line'>--host1 <span class="k">${</span><span class="nv">SERVER1</span><span class="k">}</span> --user1 <span class="k">${</span><span class="nv">UNAME1</span><span class="k">}</span> <span class="se">\</span>
+</span><span class='line'>--password1 <span class="k">${</span><span class="nv">PWORD1</span><span class="k">}</span> --ssl1 <span class="se">\</span>
+</span><span class='line'>--host2 <span class="k">${</span><span class="nv">SERVER2</span><span class="k">}</span> <span class="se">\</span>
+</span><span class='line'>--port2 993 --user2 <span class="k">${</span><span class="nv">UNAME2</span><span class="k">}</span> <span class="se">\</span>
+</span><span class='line'>--password2 <span class="k">${</span><span class="nv">PWORD2</span><span class="k">}</span> --ssl2 <span class="se">\</span>
+</span><span class='line'>--authmech1 LOGIN --authmech2 LOGIN --split1 200 --split2 200 <span class="k">${</span><span class="nv">HIDE</span><span class="k">}</span> <span class="se">\</span>
+</span><span class='line'>--exclude <span class="s1">&#39;Drafts|Trash|Spam|Sent|INBOX.Drafts|INBOX.Trash|INBOX.Spam|INBOX.Sent&#39;</span> <span class="se">\</span>
+</span><span class='line'>--exitwhenover 500000000
+</span><span class='line'>
+</span><span class='line'><span class="c">#TO Sync Special Folders to Gmail</span>
+</span><span class='line'>imapsync --syncinternaldates --useheader <span class="s1">&#39;Message-Id&#39;</span> <span class="se">\</span>
+</span><span class='line'>--host1 <span class="k">${</span><span class="nv">SERVER1</span><span class="k">}</span> --user1 <span class="k">${</span><span class="nv">UNAME1</span><span class="k">}</span> <span class="se">\</span>
+</span><span class='line'>--password1 <span class="k">${</span><span class="nv">PWORD1</span><span class="k">}</span> --ssl1 <span class="se">\</span>
+</span><span class='line'>--host2 <span class="k">${</span><span class="nv">SERVER2</span><span class="k">}</span> <span class="se">\</span>
+</span><span class='line'>--port2 993 --user2 <span class="k">${</span><span class="nv">UNAME2</span><span class="k">}</span> <span class="se">\</span>
+</span><span class='line'>--password2 <span class="k">${</span><span class="nv">PWORD2</span><span class="k">}</span> --ssl2 <span class="se">\</span>
+</span><span class='line'>--ssl2 --noauthmd5 --split1 200 --split2 200 <span class="k">${</span><span class="nv">HIDE</span><span class="k">}</span> <span class="se">\</span>
+</span><span class='line'>--folder <span class="s2">&quot;INBOX.Sent&quot;</span> --prefix2 <span class="s1">&#39;[Gmail]/&#39;</span> --regextrans2 <span class="s1">&#39;s/INBOX\.Sent/Sent Mail/&#39;</span> <span class="se">\</span>
+</span><span class='line'>--folder <span class="s2">&quot;INBOX.Spam&quot;</span> --prefix2 <span class="s1">&#39;[Gmail]/&#39;</span> --regextrans2 <span class="s1">&#39;s/INBOX\.Spam/Spam/&#39;</span> <span class="se">\</span>
+</span><span class='line'>--folder <span class="s2">&quot;INBOX.Trash&quot;</span> --prefix2 <span class="s1">&#39;[Gmail]/&#39;</span> --regextrans2 <span class="s1">&#39;s/INBOX\.Trash/Trash/&#39;</span> <span class="se">\</span>
+</span><span class='line'>--folder <span class="s2">&quot;INBOX.Drafts&quot;</span> --prefix2 <span class="s1">&#39;[Gmail]/&#39;</span> --regextrans2 <span class="s1">&#39;s/INBOX\.Drafts/Drafts/&#39;</span> <span class="se">\</span>
+</span><span class='line'>--exitwhenover 500000000
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Kapcsolodó tartalom:</p>
+
+<ul>
+<li><a href="http://seagrief.co.uk/2010/12/moving-to-google-apps-with-imapsync">http://seagrief.co.uk/2010/12/moving-to-google-apps-with-imapsync</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Első drupal contrib patch amit irtam]]></title>
