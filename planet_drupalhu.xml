@@ -1,91 +1,88 @@
-
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Állomány feltöltés saját formon - Drupal kattintgatás nélkül</title>
-  <meta name="author" content="York">
-
-  
-  <meta name="description" content="A minap a webform2pdf drupal 6-os modulom drupal 5-ös átiratát készítettem, amikor belefutottam az állomány feltöltés problémájába, hogy is kell &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://ilo.hu/allomany-feltoltes-sajat-formon/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="Drupal kattintgatás nélkül" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-36119531-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xml:base="http://ilo.hu" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+  <title>Planet Drupal.hu | Drupal kattintgatás nélkül</title>
+  <link>http://ilo.hu/planet_drupal.xml</link>
+  <atom:link href="http://ilo.hu/planet_drupal.xml" rel="self" type="application/rss+xml" />
+  <language>en</language>
+  <generator>Octopress</generator>
+  <description>Planet Drupal RSS feed for http://ilo.hu</description>
 
 
-</head>
+  <item>
+    <title>Drupal modul készítése egyszerű</title>
+    <link>http://ilo.hu/drupal-modul-keszitese-egyszeru/</link>
+    <dc:creator>York</dc:creator>
+    <guid isPermaLink="true">http://ilo.hu/drupal-modul-keszitese-egyszeru/</guid>
+    <pubDate>Mon, 30 Aug 2010 11:47:00 +0200</pubDate>
+    <description><![CDATA[<p>A minap azt javasoltam a <a href="http://drupal.hu">drupal.hu</a> fórumán egy kérdezőnek, hogy amit meg akar valósítani azt ne a smink rétegbe tegye hanem írjon rá egy modult, remélem megfogadta a tanacsom. Ezt a kijelentésemet a minap <a href="http://drupal.hu/tagok/aboros">aboros</a> vágta a fejemhez. Ezért úgy döntöttem, hogy bemutatom mennyire nehéz dolog egy drupal modult elkészíteni.
+Az angol nyelvű modul fejlesztési dokumentációt itt találjátok: <a href="http://drupal.org/developing/modules">http://drupal.org/developing/modules</a>
+A modul készítésről itt írnak: <a href="http://drupal.org/node/231276">http://drupal.org/node/231276</a>.</p>
 
-<body   >
-  <header role="banner"><hgroup>
-  <div id="logo"><a href="/" title="Címlap" rel="home" id="logo"><img src="/images/icons/logo.png" alt="Címlap"></a></div>
-  <h1><a href="/">Drupal kattintgatás nélkül</a></h1>
-  
-    <h2>Avagy egy drupal programozó hétköznapjai</h2>
-  
-</hgroup>
-
-</header>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">Állomány Feltöltés Saját Formon</h1>
-    
-    
-      <p class="meta">
-        
+<!-- more -->
 
 
+<p>Egy oldal elkészítése során sok apró csiszolást kell elvégezni, hogy a drupal pont úgy működjön ahogy azt szeretnénk.
+Ezeket a módosításokat célszerű egy a honlap nevével fémjelzet modulba tenni.
+A most következő példában egy ilyen modul elkészítését mutatom meg a mysite nevű modult fogjuk elkészíteni, és a modul minden oldal letöltéskor egy üzenetet fog megjeleníteni.</p>
+
+<p>A drupalban a modulok neve csak olyan karaktereket tartalmazhat, ami egy PHP függvény nevében is megadható, mivel a modul neve minden modulban létrehozott függvény nevében szerepelni fog.</p>
+
+<p>A feltelepített drupal sites/all/modules alkönyvtárába hozzuk létre a mysite könyvtárat.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /var/www/drupal/
+</span><span class='line'>mkdir -p sites/all/modules/mysite
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>A modul létrehozásához minimum két állomány szükséges egy mysite.info és egy mysite.module, ha szeretnénk a modul telepítésekor műveleteket végezni, akkor szükségünk lesz egy mysite.install állományra is (nekünk most nem kell).
+Létrehozzuk mindegyik állományt. Kezdjük a mysite.info állománnyal, ennek a tartalma a következő legyen:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">name</span> <span class="o">=</span> mysite
+</span><span class='line'><span class="nv">description</span> <span class="o">=</span> A mysite oldalon végzett módosításokat tartalmazza.
+</span><span class='line'><span class="nv">core</span> <span class="o">=</span> 7.x
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>A name a modul neve, a description a modul leírását tartalmazza, ezeket az értékeket kötelező megadni, de az info állományba megadhatunk még modul függőséget php és drupal verziót, az alábbi oldalon megtaláljuk a többi lehetőséget is: <a href="http://drupal.org/node/231036">http://drupal.org/node/231036</a>
+A core opció a drupal verziót határozza meg, ha 6-os drupalhoz készítjük a 7.x-et 6.x-re cseréljük.</p>
+
+<p>Az info állomány elkészítése után a mysite.module állományunkat kell elkészíteni.
+Az állomány tartalma legyen a következő:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="sd">/**</span>
+</span><span class='line'><span class="sd"> * hook_init() implementálása</span>
+</span><span class='line'><span class="sd"> */</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">mysite_init</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">drupal_set_message</span><span class="p">(</span><span class="nx">t</span><span class="p">(</span><span class="s1">&#39;New message&#39;</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-  
+<p>A module állományban a <a href="http://api.drupal.org/api/function/hook_init/6">hook_init</a> hurkot implementáltuk. A szöveg kiíratására pedig a <a href="http://api.drupal.org/api/function/drupal_set_message/6">drupal_set_message()</a> függvény segítségével történt. A <a href="http://api.drupal.org/api/function/t/6">t()</a> függvény fordítja le a szöveget az oldal nyelvére.</p>
+]]></description>
+  </item>
 
-
-<time datetime="2009-12-21T19:18:38+01:00" pubdate data-updated="true">2009-12-21 19:18</time>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>A minap a webform2pdf drupal 6-os modulom drupal 5-ös átiratát készítettem, amikor belefutottam az állomány feltöltés problémájába, hogy is kell állományt feltölteni drupal 5-tel?
+  <item>
+    <title>Állomány feltöltés saját formon</title>
+    <link>http://ilo.hu/allomany-feltoltes-sajat-formon/</link>
+    <dc:creator>York</dc:creator>
+    <guid isPermaLink="true">http://ilo.hu/allomany-feltoltes-sajat-formon/</guid>
+    <pubDate>Mon, 21 Dec 2009 19:18:38 +0100</pubDate>
+    <description><![CDATA[<p>A minap a webform2pdf drupal 6-os modulom drupal 5-ös átiratát készítettem, amikor belefutottam az állomány feltöltés problémájába, hogy is kell állományt feltölteni drupal 5-tel?
 Az ötös Drupal kimaradt az életemből, így nem sok tapasztalatom van vele, valahogy úgy alakult, hogy a 4.7.x után nekem a 6-os Drupal jött.
 Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a href="#drupal_5">drupal 5</a>-tel, majd nézzük meg, hogy változott meg ez <a href="#drupal_6">drupal 6</a>-ra.</p>
 
@@ -340,176 +337,10 @@ Ebben az esetben nem kell validate függvényt írnunk, mert egy lépésben megt
 <li><a href="http://groups.drupal.org/node/4308">http://groups.drupal.org/node/4308</a></li>
 </ul>
 
-</div>
+]]></description>
+  </item>
 
 
-  <footer>
-    <p class="meta">
-      
-  
+</channel>
+</rss>
 
-<span class="byline author vcard">Posted by <span class="fn">York</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-21T19:18:38+01:00" pubdate data-updated="true">2009-12-21 19:18</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/categories/drupal-5/'>Drupal 5</a>, <a class='category' href='/categories/drupal-6/'>Drupal 6</a>, <a class='category' href='/categories/drupal-hu-planet/'>Drupal.hu planet</a>, <a class='category' href='/categories/form-api/'>Form API</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ilo.hu/allomany-feltoltes-sajat-formon/" data-via="" data-counturl="http://ilo.hu/allomany-feltoltes-sajat-formon/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/using-xdebug-with-mamp-and-acquia-drupal-stack/" title="Previous Post: Using Xdebug with MAMP and Acquia Drupal Stack">&laquo; Using Xdebug with MAMP and Acquia Drupal Stack</a>
-      
-      
-        <a class="basic-alignment right" href="/ldap-avagy-a-hosszu-elet-ritka/" title="Next Post: LDAP avagy a hosszú élet ritka">LDAP avagy a hosszú élet ritka &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-</div>
-
-<aside class="sidebar">
-  
-    
-<div id="sidebar-search">
-  <form action="http://google.com/search" method="get">
-    <fieldset role="search">
-      <input type="hidden" name="q" value="site:ilo.hu" />
-      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-    </fieldset>
-  </form>
-</div>
-
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/imapsync-courier-to-gmail/">Imapsync Courier to Gmail</a>
-      </li>
-    
-      <li class="post">
-        <a href="/elso-drupal-contrib-patch-amit-irtam/">Első drupal contrib patch amit irtam</a>
-      </li>
-    
-      <li class="post">
-        <a href="/time-machine-samba-megosztasra-mentsen-snow-leopard-alatt/">Time Machine Samba megosztásra mentsen Snow Leopard alatt</a>
-      </li>
-    
-      <li class="post">
-        <a href="/drupal-modul-keszitese-egyszeru/">Drupal modul készítése egyszerű</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ldap-avagy-a-hosszu-elet-ritka/">LDAP avagy a hosszú élet ritka</a>
-      </li>
-    
-  </ul>
-</section>
-<section>
-  <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/drupal-5'>Drupal 5 (1)</a></li><li><a href='/categories/drupal-6'>Drupal 6 (5)</a></li><li><a href='/categories/drupal-hu-planet'>Drupal.hu planet (2)</a></li><li><a href='/categories/en'>EN (1)</a></li><li><a href='/categories/form-api'>Form API (1)</a></li><li><a href='/categories/google'>Google (1)</a></li><li><a href='/categories/howto'>Howto (2)</a></li><li><a href='/categories/imapsync'>ImapSync (1)</a></li><li><a href='/categories/ldap'>LDAP (1)</a></li><li><a href='/categories/linux'>Linux (1)</a></li><li><a href='/categories/mail'>Mail (1)</a></li><li><a href='/categories/mamp'>MAMP (2)</a></li><li><a href='/categories/module'>Module (2)</a></li><li><a href='/categories/netbeans'>NetBeans (2)</a></li><li><a href='/categories/osx'>OSX (3)</a></li><li><a href='/categories/php'>PHP (3)</a></li></ul>
-</section>
-<section>
-  <h1>About Me</h1>
-  <div class="about-me">
-    <div id="social_facebook"><a href="http://www.facebook.com/Yorkhun"><img src="/images/icons/facebook.png"></a></div>
-    <div id="social_twitter"><a href="http://twitter.com/yorkhu"><img src="/images/icons/twitter.png"></a></div>
-    <div id="social_rss"><a href="/atom.xml" title="subscribe via RSS"><img src="/images/icons/rss.png"></a></div>
-  </div>
-</section>
-
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><div id="footer">
-    <section>
-        <div class="licence-img"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/hu/"><img alt="Creative Commons Licenc" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/2.5/hu/88x31.png"></a></div>
-        <div class="licence-text">A honlapon megjelent <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" rel="dct:type">Írások</span> a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/hu/">Creative Commons Nevezd meg! - Ne add el! - Így add tovább! 2.5 Magyarország Licenc feltételeinek megfelelően szabadon felhasználható</a>.</div>
-        <p>
-            Copyright &copy; 2012 - York -
-            <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-        </p>
-    </section>
-</div>
-
-
-
-
-</footer>
-  
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
-</html>
