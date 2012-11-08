@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xml:base="http://ilo.hu" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+  <title>Planet Drupal.hu | Drupal kattintgatás nélkül</title>
+  <link>http://ilo.hu/planet_drupal.xml</link>
+  <atom:link href="http://ilo.hu/planet_drupal.xml" rel="self" type="application/rss+xml" />
+  <language>en</language>
+  <generator>Octopress</generator>
+  <description>Planet Drupal RSS feed for http://ilo.hu</description>
+
+
+  <item>
+    <title>Drupal modul készítése egyszerű</title>
+    <link>http://ilo.hu/drupal-modul-keszitese-egyszeru/</link>
+    <dc:creator>York</dc:creator>
+    <guid isPermaLink="true">http://ilo.hu/drupal-modul-keszitese-egyszeru/</guid>
+    <pubDate>Mon, 30 Aug 2010 11:47:00 +0200</pubDate>
+    <description><![CDATA[<p>A minap azt javasoltam a <a href="http://drupal.hu">drupal.hu</a> fórumán egy kérdezőnek, hogy amit meg akar valósítani azt ne a smink rétegbe tegye hanem írjon rá egy modult, remélem megfogadta a tanacsom. Ezt a kijelentésemet a minap <a href="http://drupal.hu/tagok/aboros">aboros</a> vágta a fejemhez. Ezért úgy döntöttem, hogy bemutatom mennyire nehéz dolog egy drupal modult elkészíteni.
+Az angol nyelvű modul fejlesztési dokumentációt itt találjátok: <a href="http://drupal.org/developing/modules">http://drupal.org/developing/modules</a>
+A modul készítésről itt írnak: <a href="http://drupal.org/node/231276">http://drupal.org/node/231276</a>.</p>
+
+<!-- more -->
+
+
+<p>Egy oldal elkészítése során sok apró csiszolást kell elvégezni, hogy a drupal pont úgy működjön ahogy azt szeretnénk.
+Ezeket a módosításokat célszerű egy a honlap nevével fémjelzet modulba tenni.
+A most következő példában egy ilyen modul elkészítését mutatom meg a mysite nevű modult fogjuk elkészíteni, és a modul minden oldal letöltéskor egy üzenetet fog megjeleníteni.</p>
+
+<p>A drupalban a modulok neve csak olyan karaktereket tartalmazhat, ami egy PHP függvény nevében is megadható, mivel a modul neve minden modulban létrehozott függvény nevében szerepelni fog.</p>
+
+<p>A feltelepített drupal sites/all/modules alkönyvtárába hozzuk létre a mysite könyvtárat.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /var/www/drupal/
+</span><span class='line'>mkdir -p sites/all/modules/mysite
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A modul létrehozásához minimum két állomány szükséges egy mysite.info és egy mysite.module, ha szeretnénk a modul telepítésekor műveleteket végezni, akkor szükségünk lesz egy mysite.install állományra is (nekünk most nem kell).
+Létrehozzuk mindegyik állományt. Kezdjük a mysite.info állománnyal, ennek a tartalma a következő legyen:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">name</span> <span class="o">=</span> mysite
+</span><span class='line'><span class="nv">description</span> <span class="o">=</span> A mysite oldalon végzett módosításokat tartalmazza.
+</span><span class='line'><span class="nv">core</span> <span class="o">=</span> 7.x
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A name a modul neve, a description a modul leírását tartalmazza, ezeket az értékeket kötelező megadni, de az info állományba megadhatunk még modul függőséget php és drupal verziót, az alábbi oldalon megtaláljuk a többi lehetőséget is: <a href="http://drupal.org/node/231036">http://drupal.org/node/231036</a>
+A core opció a drupal verziót határozza meg, ha 6-os drupalhoz készítjük a 7.x-et 6.x-re cseréljük.</p>
+
+<p>Az info állomány elkészítése után a mysite.module állományunkat kell elkészíteni.
+Az állomány tartalma legyen a következő:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="sd">/**</span>
+</span><span class='line'><span class="sd"> * hook_init() implementálása</span>
+</span><span class='line'><span class="sd"> */</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">mysite_init</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">drupal_set_message</span><span class="p">(</span><span class="nx">t</span><span class="p">(</span><span class="s1">&#39;New message&#39;</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A module állományban a <a href="http://api.drupal.org/api/function/hook_init/6">hook_init</a> hurkot implementáltuk. A szöveg kiíratására pedig a <a href="http://api.drupal.org/api/function/drupal_set_message/6">drupal_set_message()</a> függvény segítségével történt. A <a href="http://api.drupal.org/api/function/t/6">t()</a> függvény fordítja le a szöveget az oldal nyelvére.</p>
+]]></description>
+  </item>
+
+  <item>
+    <title>Állomány feltöltés saját formon</title>
+    <link>http://ilo.hu/allomany-feltoltes-sajat-formon/</link>
+    <dc:creator>York</dc:creator>
+    <guid isPermaLink="true">http://ilo.hu/allomany-feltoltes-sajat-formon/</guid>
+    <pubDate>Mon, 21 Dec 2009 19:18:38 +0100</pubDate>
+    <description><![CDATA[<p>A minap a webform2pdf drupal 6-os modulom drupal 5-ös átiratát készítettem, amikor belefutottam az állomány feltöltés problémájába, hogy is kell állományt feltölteni drupal 5-tel?
+Az ötös Drupal kimaradt az életemből, így nem sok tapasztalatom van vele, valahogy úgy alakult, hogy a 4.7.x után nekem a 6-os Drupal jött.
+Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a href="#drupal_5">drupal 5</a>-tel, majd nézzük meg, hogy változott meg ez <a href="#drupal_6">drupal 6</a>-ra.</p>
+
+<!-- more -->
+
+
+<h2><a name="drupal_5">Drupal 5</a></h2>
+
+<p>Form függvényünkben most csak egy állományt fogunk feltölteni:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;#attributes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;enctype&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;multipart/form-data&quot;</span>
+</span><span class='line'>  <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;file_upload&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;#type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;#title&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Filename&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;#type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;submit&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;#value&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Upload file&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="nv">$form</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_submit</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
+</span><span class='line'>  <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_check_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nv">$file</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">// Ha sikeres volt elmentjük az állományt a megadott könyvtárba</span>
+</span><span class='line'>    <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_save_upload</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="s1">&#39;cél_könyvtár_útvonala&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Eddig sétagalopp, a neheze akkor jön amikor valamilyen feltételnek megfelelő állományt szeretnénk, ha feltöltene a felhasználó. A példában várjunk egy képet, ami nem nagyobb mint 100x100 pixel, ha nagyobb méretezzük át.</p>
+
+<p>A validációban megvizsgáljuk, hogy kép típusú-e az állomány, az átméretezést pedig megcsináljuk a sumbitkor.</p>
+
+<p>A form előállítása változatlan. Az feltöltött állomány vizsgálatát a form validate függvényben végezzük el. A submit függvényben a képet átméretezzük, ha nagyobb mint a megengedett, majd elmentjük a megadott könyvtárba.
+Validate függvény:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_validate</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
+</span><span class='line'>  <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_check_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Létezik-e a feltöltött állomány</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Megnézzük, hogy kép-e</span>
+</span><span class='line'>    <span class="nv">$info</span> <span class="o">=</span> <span class="nx">image_get_info</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$info</span> <span class="o">||</span> <span class="o">!</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;extension&#39;</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">form_set_error</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">,</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;The uploaded file was not an image.&#39;</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Submit függvény:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_submit</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Ellenőrizzük le, hogy sikeres volt-e a feltöltés  </span>
+</span><span class='line'>  <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_check_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Létezik-e a feltöltött állomány</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Kép méret ellenőrzése</span>
+</span><span class='line'>    <span class="k">list</span><span class="p">(</span><span class="nv">$maxwidth</span><span class="p">,</span> <span class="nv">$maxheight</span><span class="p">)</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;100x100&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nv">$maxwidth</span> <span class="o">||</span> <span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nv">$maxheight</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// Átméretezés</span>
+</span><span class='line'>      <span class="nx">image_scale</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">,</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">filepath</span><span class="p">,</span> <span class="nv">$maxwidth</span><span class="p">,</span> <span class="nv">$maxheight</span><span class="p">);</span>
+</span><span class='line'>      <span class="c1">// Informáljuk a felhasználót az eseményről.</span>
+</span><span class='line'>      <span class="nx">drupal_set_message</span><span class="p">(</span><span class="nx">t</span><span class="p">(</span><span class="s1">&#39;The image was resized to fit within the maximum allowed dimensions of %dimensions pixels.&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;%dimensions&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100x100&#39;</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Állomány elmentése a megadott helyre.</span>
+</span><span class='line'>    <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_save_upload</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="s1">&#39;cél_könyvtár_útvonala&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Aki ismeri a drupal 6 állomány kezelését az tudja, hogy ott már adatbázisban tárolja le az állományok adatait. Adatbázis drupal 5-ben is rendelkezésre áll csak kicsit más a szerkezete, és picit más célokra szolgál. Mi magunk is írhatunk az adatbázisba, ha szeretnénk ott is tárolni az állományaink adatait. Arra azonban figyeljünk, hogy az ötös verzióban magunknak kell gondoskodni az állományok törléséről mind a lemezről mind az adatbázisból (ha használjuk).</p>
+
+<p>Nézzük, hogy kell állományt feltölteni drupal 6 alatt.</p>
+
+<h2><a name="drupal_6">Drupal 6</a></h2>
+
+<p>Hozzuk létre a form függvényünket a következő kép:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány</span>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;#attributes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;enctype&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;multipart/form-data&quot;</span>
+</span><span class='line'>  <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;file_upload&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;#type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;#title&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Filename&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;submit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;#type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;submit&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;#value&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Upload file&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="nv">$form</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_submit</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">//Állomány feltöltése</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_save_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(),</span> <span class="s1">&#39;cél_könyvtár_útvonala&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
+</span><span class='line'>    <span class="nx">file_set_status</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nx">FILE_STATUS_PERMANENT</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Készítsük el a fenti példa drupal 6-os változatát. A feladat várjunk egy képet, ami nem nagyobb mint 100x100 pixel, ha nagyobb méretezzük át.
+Ebben az esetben nem kell validate függvényt írnunk, mert egy lépésben megtehetjük a submit részben.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">mymodule_upload_form_submit</span><span class="p">(</span><span class="nv">$form_id</span><span class="p">,</span> <span class="nv">$form_values</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">//Az feltöltött állomány validációs feltételei. </span>
+</span><span class='line'>  <span class="nv">$validators</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;file_validate_is_image&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
+</span><span class='line'>    <span class="s1">&#39;file_validate_image_resolution&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;100x100&#39;</span><span class="p">),</span>
+</span><span class='line'>  <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">//Állomány feltöltése, validációval</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nx">file_save_upload</span><span class="p">(</span><span class="s1">&#39;file_upload&#39;</span><span class="p">,</span> <span class="nv">$validators</span><span class="p">,</span> <span class="s1">&#39;cél_könyvtár_útvonala&#39;</span> <span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.</span>
+</span><span class='line'>    <span class="nx">file_set_status</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nx">FILE_STATUS_PERMANENT</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A <a href="http://api.drupal.org/api/function/file_save_upload">file_save_upload</a> függvényről az <a href="http://api.drupal.org">http://api.drupal.org</a> oldalon van részletesebb leírás.</p>
+
+<p>Felhasznált források:</p>
+
+<ul>
+<li><a href="http://www.computerminds.co.uk/example-code-build-upload-form-drupal">http://www.computerminds.co.uk/example-code-build-upload-form-drupal</a></li>
+<li><a href="http://groups.drupal.org/node/4308">http://groups.drupal.org/node/4308</a></li>
+</ul>
+
+]]></description>
+  </item>
+
+
+</channel>
+</rss>
+
