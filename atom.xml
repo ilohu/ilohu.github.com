@@ -4,7 +4,7 @@
   <title><![CDATA[Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2012-11-08T20:02:35+01:00</updated>
+  <updated>2012-11-29T21:50:04+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Drupál Hétvége 2012 élménybeszámoló]]></title>
+    <link href="http://ilo.hu/dh2012/"/>
+    <updated>2012-11-29T19:30:00+01:00</updated>
+    <id>http://ilo.hu/dh2012</id>
+    <content type="html"><![CDATA[<p>November hónap végén került megrendezésre a legnagyobb hazai drupal rendezvény. Az első nap a BME I épületét szálltuk meg, ahol két szekcióban hallgathattunk előadásokat. A második nap az NIIF Intézetet nagy tárgyalóját foglaltuk el, ahol a közösségi nap volt. Nagyon jól sikerült a rendezvény, ezúton is gratulálok a rendezőknek.</p>
+
+<!-- more -->
+
+
+<h2>Konferencia</h2>
+
+<p>A konferencia napján kicsit elkésnem. <a href="http://drupal.hu/konferencia/2012/program#miabaj">Dianiska Balázs</a> előadására pár perc késéssel ültem be, szerencsére itt megtudtam mi baj lehet a drupal oldalammal.
+Következőnek a <a href="http://drupal.hu/konferencia/2012/program#d8lang">drupal 8 új többnyelvű rendszeréről</a> szoló előadást néztem ki, de Gábor mondta, hogy ha szeretnék részt venni a drupal 8 fejlesztését elősegítő usability teszten, akkor ha tehetem hagyjam ki az előadását. Így maradtam a másik teremben, ahol <a href="http://drupal.hu/konferencia/2012/program#bizthalo">Komli József és Palócz István</a> mutatott be egy nagyon érdekesen működő portál rendszert.
+A következő előadáson <a href="http://drupal.hu/konferencia/2012/program#entityapi">Czövek András mesélt az entity kezelésről</a>. Én nagyon mást vártam ettől az előadástól, szerintem túl elméletire sikerült, és kevés olyan dolgot mutatott amit a napi munka során hasznosítani lehet.</p>
+
+<p>Az ebéd szünet után már kezdtem izgulni, hamarosan én jöttem. Előttem <a href="http://drupal.hu/konferencia/2012/program#formok">Csáki István</a> mutatott 15 percben néhány egyszerű trükköt a form módosításokra.</p>
+
+<p>Majd én következtem egy rövid előadással a kezes bárány fieldekről. Csalódást kellett okozzak mindenkinek, aki azt várta, hogy elmondjam a field készítés titkát. Helyette megpróbáltam megmutatni, hogy tudjuk a meglévő fieldeket átformálni, újrahasznosítani. Az előadásom fóliái letölthetők <a href="http://ilo.hu/files/dh2012_kezes_barany_fieldek.pdf">innen</a>, a mintakódot feltettem a <a href="https://github.com/yorkhu/example-field-dh2012">githubra</a>.</p>
+
+<p>Az előadásom után Palócz István mutatta meg röviden, milyen egyszerű teszteket írni. Az ezt követő szünetben a büfé szekcióban ragadtam, ezért már nagyon várom a videókat, hogy pótoljak néhány előadást.</p>
+
+<p>Az utolsó előadást amire beültem <a href="http://drupal.hu/konferencia/2012/program#enterprise">Dianiska Balázs tartotta az enterprise drupalról</a>, amit sikerült átbeszélgetni egy korábban sosem látott munkaadómmal.</p>
+
+<h2>Közösségi nap</h2>
+
+<p>A közösségi napról már nem késtem el. Segítettem Rőczei Gábornak előkészíteni az NIIF alagsori tárgyalóját, a hamarosan érkező résztvevőknek.</p>
+
+<p><img src="http://ilo.hu/images/2012-11-25_08-35-37_629.jpg" alt="NIIF Intézet közösségi terem kora reggel" /></p>
+
+<p>A közösségi nap nagyon hasznosan telt:</p>
+
+<ul>
+<li>Csáki Istvánnak segítenem, hogy tudjon dolgozni a drupal.hu javításán.</li>
+<li>Hojtsy Gábor vezetésével drupal 8 usability teszteltem sokakkal együtt. Érdekes volt megtapasztalni milyen a weboldal túloldalán ülni.</li>
+<li>Majd drupal 8 tesztírásba folytam bele Csonka Gergő társaságában. Azóta sikerült RTBC-re állítani az issuet.</li>
+</ul>
+
+
+<p>Ebéd után újra meghallgattuk Kléri Bálint drupal 8 újdonságairól szóló előadását, amit sajnos nem sikerült rögzíteni az első nap, és a jelenlévők közül többen nem láttunk. Köszönöm még egyszer Bálintnak, nagyon sziporkázó előadás volt!</p>
+
+<p>Az utolsó utáni pillanatban rohantam el a buszhoz, így sikerült 4 perccel az indulás előtt felszállni rá.</p>
+
+<p>Már várom a következő hazai rendezvényt!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Imapsync Courier to Gmail]]></title>
