@@ -4,7 +4,7 @@
   <title><![CDATA[Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2013-02-21T09:00:48+01:00</updated>
+  <updated>2013-02-21T09:45:55+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hombrew telepítése - DFK#1]]></title>
+    <link href="http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1/"/>
+    <updated>2013-02-21T07:59:00+01:00</updated>
+    <id>http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1</id>
+    <content type="html"><![CDATA[<p>A Drupal fejlesztői környezet (DFK) kialakítása sorozat első felében a parancssoros környezetem kialakítását mutatom be. Ebben a postban a hombrew telepítéséről lesz szó.</p>
+
+<!-- more -->
+
+
+<p>A tavaly meglepően sok Apple akció volt kis hazánkban, aminek egész évben sikeresen ellenálltam, kivéve az utolsónak :), ahol beszereztem a második MBP-mat. Az új gépre nem töltöttem vissza az régi mentését, hanem nulláról telepítettem újra a szükséges alkalmazásokat. Megpróbálom bemutatni, hogy alakult ki az a környezet amivel a napi munkám végzem.</p>
+
+<h2>Xcode telepítése</h2>
+
+<p>A <a href="http://mxcl.github.com/homebrew/">brew</a> telepítéséhez szükségünk lesz az Xcodera, amit az appstoreból tudunk telepíteni. Az Xcodera azért van szükség, mert tartalmaz egy Command Line Tool komponenst. Ebben a komponensben olyan parancsok vannak, amikre erősen épít a brew. Az Xcode sikeres telepítése után tegyük fel a Command Line Tool komponenst. Ehhez indítsuk el a programot, majd lepjünk be a Preferences menübe, ahol a képen látható tabon tudjuk telepíteni a nekünk szükséges komponenst.</p>
+
+<p><img src="http://ilo.hu/pictures/xcode-command-line-tools-install.jpg" title="Xcode - Command Line Tool install" alt="Xcode - Command Line Tool install" /></p>
+
+<p>Ha sikeresen telepítettük a komponenst zárjuk be az Xcode-t, többet nem lesz rá szükségünk.</p>
+
+<h2>Homebrew telepítése</h2>
+
+<p>Indítsunk el egy terminál appot. Én az <a href="http://www.iterm2.com/">iTerm2</a> (<a href="http://code.google.com/p/iterm2/downloads/list">Letöltés</a>) használom.
+A brew telepítése az alábbi paranccsal történik:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ha a telepítés sikerült, akkor a befejezéséhez adjuk ki a következő parancsot:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>brew doctor
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Amire parancssorból szükség lehet</h2>
+
+<p>Én az alábbi parancsokat szoktam telepíteni:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>brew install bash_completion drush htop git lynx mc sshfs pwgen tig unrar wget
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A telepített alkalmazások közül bemutatnék néhányat.</p>
+
+<ul>
+<li><strong>git</strong>: A brew frissebb verziót tartalmaz, mint amit alapból megtalálunk osx alatt.</li>
+<li><strong>drush</strong>: Azért telepítem csomagkezelővel, hogy ne nekem kelljen foglalkozni a drush frissítésével.</li>
+<li><strong>sshfs</strong>: Sokszor kényelmesebb helyi könyvtárként látni egy távol szerver könyvtár struktúráját, mint scp parancsot használni. Pl.: Kényelmesen lehet diff-et használni egy távoli és egy helyi változat összehasonlítására.</li>
+<li><strong>tig</strong>: Nagyon jó karakteres git kliens.</li>
+</ul>
+
+
+<h3>Hasznos linkek</h3>
+
+<ul>
+<li><a href="http://mxcl.github.com/homebrew/">http://mxcl.github.com/homebrew/</a></li>
+<li><a href="http://crosstown.coolestguyplanettech.com/os-x/40-setting-up-os-x-lion-to-plug-into-homebrew-package-manager">http://crosstown.coolestguyplanettech.com/os-x/40-setting-up-os-x-lion-to-plug-into-homebrew-package-manager</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Drupál Hétvége 2012 élménybeszámoló]]></title>

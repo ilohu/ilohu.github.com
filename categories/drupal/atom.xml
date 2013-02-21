@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Drupal | Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/categories/drupal/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2013-02-21T09:00:48+01:00</updated>
+  <updated>2013-02-21T09:45:55+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -12,6 +12,67 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hombrew telepítése - DFK#1]]></title>
+    <link href="http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1/"/>
+    <updated>2013-02-21T07:59:00+01:00</updated>
+    <id>http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1</id>
+    <content type="html"><![CDATA[<p>A Drupal fejlesztői környezet (DFK) kialakítása sorozat első felében a parancssoros környezetem kialakítását mutatom be. Ebben a postban a hombrew telepítéséről lesz szó.</p>
+
+<!-- more -->
+
+
+<p>A tavaly meglepően sok Apple akció volt kis hazánkban, aminek egész évben sikeresen ellenálltam, kivéve az utolsónak :), ahol beszereztem a második MBP-mat. Az új gépre nem töltöttem vissza az régi mentését, hanem nulláról telepítettem újra a szükséges alkalmazásokat. Megpróbálom bemutatni, hogy alakult ki az a környezet amivel a napi munkám végzem.</p>
+
+<h2>Xcode telepítése</h2>
+
+<p>A <a href="http://mxcl.github.com/homebrew/">brew</a> telepítéséhez szükségünk lesz az Xcodera, amit az appstoreból tudunk telepíteni. Az Xcodera azért van szükség, mert tartalmaz egy Command Line Tool komponenst. Ebben a komponensben olyan parancsok vannak, amikre erősen épít a brew. Az Xcode sikeres telepítése után tegyük fel a Command Line Tool komponenst. Ehhez indítsuk el a programot, majd lepjünk be a Preferences menübe, ahol a képen látható tabon tudjuk telepíteni a nekünk szükséges komponenst.</p>
+
+<p><img src="/pictures/xcode-command-line-tools-install.jpg" title="Xcode - Command Line Tool install" alt="Xcode - Command Line Tool install" /></p>
+
+<p>Ha sikeresen telepítettük a komponenst zárjuk be az Xcode-t, többet nem lesz rá szükségünk.</p>
+
+<h2>Homebrew telepítése</h2>
+
+<p>Indítsunk el egy terminál appot. Én az <a href="http://www.iterm2.com/">iTerm2</a> (<a href="http://code.google.com/p/iterm2/downloads/list">Letöltés</a>) használom.
+A brew telepítése az alábbi paranccsal történik:
+<code>sh
+ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+</code></p>
+
+<p>Ha a telepítés sikerült, akkor a befejezéséhez adjuk ki a következő parancsot:
+<code>sh
+brew doctor
+</code></p>
+
+<h2>Amire parancssorból szükség lehet</h2>
+
+<p>Én az alábbi parancsokat szoktam telepíteni:</p>
+
+<p><code>sh
+brew install bash_completion drush htop git lynx mc sshfs pwgen tig unrar wget
+</code></p>
+
+<p>A telepített alkalmazások közül bemutatnék néhányat.</p>
+
+<ul>
+<li><strong>git</strong>: A brew frissebb verziót tartalmaz, mint amit alapból megtalálunk osx alatt.</li>
+<li><strong>drush</strong>: Azért telepítem csomagkezelővel, hogy ne nekem kelljen foglalkozni a drush frissítésével.</li>
+<li><strong>sshfs</strong>: Sokszor kényelmesebb helyi könyvtárként látni egy távol szerver könyvtár struktúráját, mint scp parancsot használni. Pl.: Kényelmesen lehet diff-et használni egy távoli és egy helyi változat összehasonlítására.</li>
+<li><strong>tig</strong>: Nagyon jó karakteres git kliens.</li>
+</ul>
+
+
+<h3>Hasznos linkek</h3>
+
+<ul>
+<li><a href="http://mxcl.github.com/homebrew/">http://mxcl.github.com/homebrew/</a></li>
+<li><a href="http://crosstown.coolestguyplanettech.com/os-x/40-setting-up-os-x-lion-to-plug-into-homebrew-package-manager">http://crosstown.coolestguyplanettech.com/os-x/40-setting-up-os-x-lion-to-plug-into-homebrew-package-manager</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Drupál Hétvége 2012 élménybeszámoló]]></title>
@@ -314,134 +375,6 @@ file_set_status($file, FILE_STATUS_PERMANENT);
 <ul>
 <li><a href="http://www.computerminds.co.uk/example-code-build-upload-form-drupal">http://www.computerminds.co.uk/example-code-build-upload-form-drupal</a></li>
 <li><a href="http://groups.drupal.org/node/4308">http://groups.drupal.org/node/4308</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using Xdebug with MAMP and Acquia Drupal Stack]]></title>
-    <link href="http://ilo.hu/using-xdebug-with-mamp-and-acquia-drupal-stack/"/>
-    <updated>2009-11-20T17:21:48+01:00</updated>
-    <id>http://ilo.hu/using-xdebug-with-mamp-and-acquia-drupal-stack</id>
-    <content type="html"><![CDATA[<p>Recently I have switched from Linux to OS X.
-In order to continue my job effectively I had to set up a proper development environment.
-For programming tasks I prefer the <a href="http://www.netbeans.org">NetBeans IDE</a>, which is available for OS X.
-I have not yet decided about the server side, so currently I'm testing two alternatives. Those are <a href="http://www.mamp.info">MAMP</a> and the <a href="http://acquia.com">Acquia Drupal Stack</a> which is a great help for Drupal development.
-I picked Acquia Drupal Stack because most of my tasks are Drupal related and this tool can save me a lot of time.
-You can watch Gabor Hojtsy's presentation on Acquia Drupal Stack at DrupalCamp Hungary: <a href="http://csecsy.hu/boobaa_blogja/hojtsy_gabor_telepites_es_menedzseles_az_acquia_stack_installer_segitsegevel_drupal_hetvege_2009_7_resz">here</a>.</p>
-
-<!-- more -->
-
-
-<p>Download and install as usual:</p>
-
-<ul>
-<li>NetBeans: <a href="http://netbeans.org/downloads/indexC.html">http://netbeans.org/downloads/indexC.html</a></li>
-<li>MAMP: <a href="http://www.mamp.info/en/downloads/index.html">http://www.mamp.info/en/downloads/index.html</a></li>
-<li>Acquia Drupal Stack: <a href="http://acquia.com/downloads/mac-installer">http://acquia.com/downloads/mac-installer</a></li>
-</ul>
-
-
-<p>As a last step you need to install Xdebug.</p>
-
-<h2>Enabling Xdebug in MAMP</h2>
-
-<p>Fortunately MAMP contains a pre-compiled xdebug.so file, so you only need to enable it in php.ini. At the same time make sure that Zend optimizer is disabled because it does not work together with Xdebug.
-Edit php.ini using your favorite text editor:
-<code>bash
-nano /Applications/MAMP/conf/php5/php.ini
-</code>
-Change the end of the file to this:
-```ini
-;[Zend]
-;zend_optimizer.optimization_level=15
-;zend_extension_manager.optimizer=/Applications/MAMP/bin/php5/zend/lib/Optimizer-3.3.3
-;zend_optimizer.version=3.3.3</p>
-
-<p>;zend_extension=/Applications/MAMP/bin/php5/zend/lib/ZendExtensionManager.so</p>
-
-<p>[xdebug]</p>
-
-<p>xdebug.default_enable=1</p>
-
-<p>xdebug.remote_enable=1
-xdebug.remote_handler=dbgp
-xdebug.remote_host=localhost
-xdebug.remote_port=9000
-xdebug.remote_autostart=1</p>
-
-<p>zend_extension="/Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so"
-```</p>
-
-<p>Restart MAMP and check phpinfo()'s output. If you see the following lines then you've successfully enabled Xdebug.
-<img src="/images/i/MAMP_phpinfo_xdebug.jpg" alt="MAMP phpinfo xdebug" /></p>
-
-<h2>Enabling Xdebug in Acquia Drupal Stack</h2>
-
-<p>Acquia Drupal Stack doesn't contain a pre-compiled xdebug.so file, so you have two choices. Either you compile it from source or use MAMP's pre-compiled xdebug.so file. I chose the latter one. (Note: MAMP ships with php 5.2.11, whilst Acquia Drupal Stack uses version 5.2.9.)</p>
-
-<p>Copy xdebug.so from MAMP to Acquia Drupal Stack:
-<code>bash
-cd /Applications/acquia-drupal/php/ext/
-cp /Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so .
-</code></p>
-
-<p>Open php.ini using your favorite text editor:
-<code>bash
-nano /Applications/acquia-drupal/php/bin/php.ini
-</code></p>
-
-<p>Add the following lines to the end:
-```ini
-[xdebug]</p>
-
-<p>xdebug.default_enable=1</p>
-
-<p>xdebug.remote_enable=1
-xdebug.remote_handler=dbgp
-xdebug.remote_host=localhost
-xdebug.remote_port=9080
-xdebug.remote_autostart=1</p>
-
-<p>zend_extension=/Applications/acquia-drupal/php/ext/xdebug.so
-```
-In this example Xdebug is using port 9080, which is needed to make sure that MAMP and Acquia Drupal Stack don't use the same port.
-If you are not going to use them simultaneously then port 9000 is also fine here.</p>
-
-<p>You can use phpinfo() from Acquia Drupal Stack's settings:
-<img src="/images/i/Acquia_Settings.jpg" alt="Acquia Settings" /></p>
-
-<p>If you see the following then you've successfully enabled Xdebug:
-<img src="/images/i/Acquia_phpinfo_xdebug.jpg" alt="Acquia phpinfo xdebug" /></p>
-
-<h2>Real time debugging with NetBeans</h2>
-
-<p>Below you can see the settings for PHP debugging in MAMP environment:
-<img src="/images/i/NetBeans_xdebug.jpg" alt="NetBeans xdebug" /></p>
-
-<p>If you use Acquia Drupal Stack, change PHP 5 Interpreter and Debugger Port settings respectively.
-<code>
-PHP 5 Interpreter: /Applications/acquia-drupal/php/bin/php
-Debugger Port: 9080
-</code></p>
-
-<p>Web browser settings should look like this way:</p>
-
-<p><img src="/images/i/NetBeans_Browser_Options.jpg" alt="NetBeans Browser Options" /></p>
-
-<p><img src="/images/i/NetBeans_Settings_Web_Browsers.jpg" alt="NetBeans Settings Web Browsers" /></p>
-
-<p>Now you only need to set a break point and start debugging.</p>
-
-<p>I would like to thank <a href="http://itarato.blogspot.com/">itarato</a> and <a href="http://zserno.blogspot.com/">zserno</a> for their help in writing this article.
-This article was translated to English by <a href="http://zserno.blogspot.com/">zserno</a>. For the original hungarian article click <a href="http://openproject.hu/blog/york/mamp-es-acquia-drupal-stack-felruhazasa-xdebug-kepesseggel">here</a>.</p>
-
-<p>References:</p>
-
-<ul>
-<li><a href="http://debuggable.com/posts/setting-up-xdebug-on-mac-os-x-or-win32-linux:480f4dd6-0240-4a90-8fa1-4e41cbdd56cb">http://debuggable.com/posts/setting-up-xdebug-on-mac-os-x-or-win32-linux:480f4dd6-0240-4a90-8fa1-4e41cbdd56cb</a></li>
-<li><a href="http://robshouse.net/article/xdebug-komodo-and-acquia-drupal-stack-installer">http://robshouse.net/article/xdebug-komodo-and-acquia-drupal-stack-installer</a></li>
 </ul>
 
 ]]></content>

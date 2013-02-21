@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Drupal 5 - Drupal kattintgatás nélkül</title>
+  <title>Hombrew telepítése - DFK#1 - Drupal kattintgatás nélkül</title>
   <meta name="author" content="York">
 
   
-  <meta name="description" content="Category: Drupal 5">
+  <meta name="description" content="A Drupal fejlesztői környezet (DFK) kialakítása sorozat első felében a parancssoros környezetem kialakítását mutatom be. Ebben a postban a hombrew &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://ilo.hucategories/drupal-5/">
+  <link rel="canonical" href="http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -58,36 +58,152 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Drupal 5</h1>
+    
+      <h1 class="entry-title">Hombrew Telepítése - DFK#1</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-21T07:59:00+01:00" pubdate data-updated="true">2013-02-21 07:59</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>A Drupal fejlesztői környezet (DFK) kialakítása sorozat első felében a parancssoros környezetem kialakítását mutatom be. Ebben a postban a hombrew telepítéséről lesz szó.</p>
 
-  
-  <h2>2009</h2>
-
-<article>
-  
-<h1><a href="/allomany-feltoltes-sajat-formon/">Állomány feltöltés saját formon</a></h1>
-<time datetime="2009-12-21T19:18:38+01:00" pubdate><span class='month'>Dec</span> <span class='day'>21</span> <span class='year'>2009</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/drupal/'>Drupal</a>, <a class='category' href='/categories/drupal-5/'>Drupal 5</a>, <a class='category' href='/categories/drupal-6/'>Drupal 6</a>, <a class='category' href='/categories/drupal-hu-planet/'>Drupal.hu planet</a>, <a class='category' href='/categories/form-api/'>Form API</a></span>
-</footer>
+<!-- more -->
 
 
-</article>
+<p>A tavaly meglepően sok Apple akció volt kis hazánkban, aminek egész évben sikeresen ellenálltam, kivéve az utolsónak :), ahol beszereztem a második MBP-mat. Az új gépre nem töltöttem vissza az régi mentését, hanem nulláról telepítettem újra a szükséges alkalmazásokat. Megpróbálom bemutatni, hogy alakult ki az a környezet amivel a napi munkám végzem.</p>
+
+<h2>Xcode telepítése</h2>
+
+<p>A <a href="http://mxcl.github.com/homebrew/">brew</a> telepítéséhez szükségünk lesz az Xcodera, amit az appstoreból tudunk telepíteni. Az Xcodera azért van szükség, mert tartalmaz egy Command Line Tool komponenst. Ebben a komponensben olyan parancsok vannak, amikre erősen épít a brew. Az Xcode sikeres telepítése után tegyük fel a Command Line Tool komponenst. Ehhez indítsuk el a programot, majd lepjünk be a Preferences menübe, ahol a képen látható tabon tudjuk telepíteni a nekünk szükséges komponenst.</p>
+
+<p><img src="/pictures/xcode-command-line-tools-install.jpg" title="Xcode - Command Line Tool install" alt="Xcode - Command Line Tool install" /></p>
+
+<p>Ha sikeresen telepítettük a komponenst zárjuk be az Xcode-t, többet nem lesz rá szükségünk.</p>
+
+<h2>Homebrew telepítése</h2>
+
+<p>Indítsunk el egy terminál appot. Én az <a href="http://www.iterm2.com/">iTerm2</a> (<a href="http://code.google.com/p/iterm2/downloads/list">Letöltés</a>) használom.
+A brew telepítése az alábbi paranccsal történik:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ha a telepítés sikerült, akkor a befejezéséhez adjuk ki a következő parancsot:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>brew doctor
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Amire parancssorból szükség lehet</h2>
+
+<p>Én az alábbi parancsokat szoktam telepíteni:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>brew install bash_completion drush htop git lynx mc sshfs pwgen tig unrar wget
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A telepített alkalmazások közül bemutatnék néhányat.</p>
+
+<ul>
+<li><strong>git</strong>: A brew frissebb verziót tartalmaz, mint amit alapból megtalálunk osx alatt.</li>
+<li><strong>drush</strong>: Azért telepítem csomagkezelővel, hogy ne nekem kelljen foglalkozni a drush frissítésével.</li>
+<li><strong>sshfs</strong>: Sokszor kényelmesebb helyi könyvtárként látni egy távol szerver könyvtár struktúráját, mint scp parancsot használni. Pl.: Kényelmesen lehet diff-et használni egy távoli és egy helyi változat összehasonlítására.</li>
+<li><strong>tig</strong>: Nagyon jó karakteres git kliens.</li>
+</ul>
+
+
+<h3>Hasznos linkek</h3>
+
+<ul>
+<li><a href="http://mxcl.github.com/homebrew/">http://mxcl.github.com/homebrew/</a></li>
+<li><a href="http://crosstown.coolestguyplanettech.com/os-x/40-setting-up-os-x-lion-to-plug-into-homebrew-package-manager">http://crosstown.coolestguyplanettech.com/os-x/40-setting-up-os-x-lion-to-plug-into-homebrew-package-manager</a></li>
+</ul>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">York</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-21T07:59:00+01:00" pubdate data-updated="true">2013-02-21 07:59</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/drupal/'>Drupal</a>, <a class='category' href='/categories/osx/'>OSX</a>, <a class='category' href='/categories/brew/'>brew</a>, <a class='category' href='/categories/shell/'>shell</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1/" data-via="" data-counturl="http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/dh2012/" title="Previous Post: Drupál Hétvége 2012 élménybeszámoló">&laquo; Drupál Hétvége 2012 élménybeszámoló</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -169,7 +285,10 @@
       var disqus_shortname = 'ilohu';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1/';
+        var disqus_url = 'http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
