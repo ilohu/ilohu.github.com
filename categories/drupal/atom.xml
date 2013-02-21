@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Drupal | Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/categories/drupal/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2012-11-29T21:50:04+01:00</updated>
+  <updated>2013-02-21T09:00:48+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -57,6 +57,393 @@ A következő előadáson <a href="http://drupal.hu/konferencia/2012/program#ent
 <p>Az utolsó utáni pillanatban rohantam el a buszhoz, így sikerült 4 perccel az indulás előtt felszállni rá.</p>
 
 <p>Már várom a következő hazai rendezvényt!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Első drupal contrib patch amit irtam]]></title>
+    <link href="http://ilo.hu/elso-drupal-contrib-patch-amit-irtam/"/>
+    <updated>2010-09-09T15:57:00+02:00</updated>
+    <id>http://ilo.hu/elso-drupal-contrib-patch-amit-irtam</id>
+    <content type="html"><![CDATA[<p>A webform2pdf modulnál már gondot okozott, hogy nem tudtam a webform modul eredmények oldalára saját műveletet beszúrni, de ott meg tudtam kerülni egy saját menüvel. Bíztam benne, hogy az új (3.x) webform modulban lesz változás ezen a téren, hat nem lett :).
+Közben készül egy másik modul is ami a webform modulra épül és itt már nem tudtam megkerülni azt, hogy ne épüljek be a műveletek közé ezért nyitottam egy issuet (<a href="http://drupal.org/node/893090">http://drupal.org/node/893090</a>) és meg is oldottam, majd a modul karbantartója be is kommitolta :).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Drupal modul készítése egyszerű]]></title>
+    <link href="http://ilo.hu/drupal-modul-keszitese-egyszeru/"/>
+    <updated>2010-08-30T11:47:00+02:00</updated>
+    <id>http://ilo.hu/drupal-modul-keszitese-egyszeru</id>
+    <content type="html"><![CDATA[<p>A minap azt javasoltam a <a href="http://drupal.hu">drupal.hu</a> fórumán egy kérdezőnek, hogy amit meg akar valósítani azt ne a smink rétegbe tegye hanem írjon rá egy modult, remélem megfogadta a tanacsom. Ezt a kijelentésemet a minap <a href="http://drupal.hu/tagok/aboros">aboros</a> vágta a fejemhez. Ezért úgy döntöttem, hogy bemutatom mennyire nehéz dolog egy drupal modult elkészíteni.
+Az angol nyelvű modul fejlesztési dokumentációt itt találjátok: <a href="http://drupal.org/developing/modules">http://drupal.org/developing/modules</a>
+A modul készítésről itt írnak: <a href="http://drupal.org/node/231276">http://drupal.org/node/231276</a>.</p>
+
+<!-- more -->
+
+
+<p>Egy oldal elkészítése során sok apró csiszolást kell elvégezni, hogy a drupal pont úgy működjön ahogy azt szeretnénk.
+Ezeket a módosításokat célszerű egy a honlap nevével fémjelzet modulba tenni.
+A most következő példában egy ilyen modul elkészítését mutatom meg a mysite nevű modult fogjuk elkészíteni, és a modul minden oldal letöltéskor egy üzenetet fog megjeleníteni.</p>
+
+<p>A drupalban a modulok neve csak olyan karaktereket tartalmazhat, ami egy PHP függvény nevében is megadható, mivel a modul neve minden modulban létrehozott függvény nevében szerepelni fog.</p>
+
+<p>A feltelepített drupal sites/all/modules alkönyvtárába hozzuk létre a mysite könyvtárat.
+<code>bash
+cd /var/www/drupal/
+mkdir -p sites/all/modules/mysite
+</code></p>
+
+<p>A modul létrehozásához minimum két állomány szükséges egy mysite.info és egy mysite.module, ha szeretnénk a modul telepítésekor műveleteket végezni, akkor szükségünk lesz egy mysite.install állományra is (nekünk most nem kell).
+Létrehozzuk mindegyik állományt. Kezdjük a mysite.info állománnyal, ennek a tartalma a következő legyen:
+<code>bash
+name = mysite
+description = A mysite oldalon végzett módosításokat tartalmazza.
+core = 7.x
+</code>
+A name a modul neve, a description a modul leírását tartalmazza, ezeket az értékeket kötelező megadni, de az info állományba megadhatunk még modul függőséget php és drupal verziót, az alábbi oldalon megtaláljuk a többi lehetőséget is: <a href="http://drupal.org/node/231036">http://drupal.org/node/231036</a>
+A core opció a drupal verziót határozza meg, ha 6-os drupalhoz készítjük a 7.x-et 6.x-re cseréljük.</p>
+
+<p>Az info állomány elkészítése után a mysite.module állományunkat kell elkészíteni.
+Az állomány tartalma legyen a következő:
+```php
+&lt;?php
+/<em>*
+ * hook_init() implementálása
+ </em>/
+function mysite_init() {</p>
+
+<pre><code>drupal_set_message(t('New message'));
+</code></pre>
+
+<p>}
+```</p>
+
+<p>A module állományban a <a href="http://api.drupal.org/api/function/hook_init/6">hook_init</a> hurkot implementáltuk. A szöveg kiíratására pedig a <a href="http://api.drupal.org/api/function/drupal_set_message/6">drupal_set_message()</a> függvény segítségével történt. A <a href="http://api.drupal.org/api/function/t/6">t()</a> függvény fordítja le a szöveget az oldal nyelvére.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Állomány feltöltés saját formon]]></title>
+    <link href="http://ilo.hu/allomany-feltoltes-sajat-formon/"/>
+    <updated>2009-12-21T19:18:38+01:00</updated>
+    <id>http://ilo.hu/allomany-feltoltes-sajat-formon</id>
+    <content type="html"><![CDATA[<p>A minap a webform2pdf drupal 6-os modulom drupal 5-ös átiratát készítettem, amikor belefutottam az állomány feltöltés problémájába, hogy is kell állományt feltölteni drupal 5-tel?
+Az ötös Drupal kimaradt az életemből, így nem sok tapasztalatom van vele, valahogy úgy alakult, hogy a 4.7.x után nekem a 6-os Drupal jött.
+Következzen akkor egy kis leírás arról, hogy töltünk fel állományt <a href="#drupal_5">drupal 5</a>-tel, majd nézzük meg, hogy változott meg ez <a href="#drupal_6">drupal 6</a>-ra.</p>
+
+<!-- more -->
+
+
+<h2><a name="drupal_5">Drupal 5</a></h2>
+
+<p>Form függvényünkben most csak egy állományt fogunk feltölteni:
+```phpinline
+function mymodule_upload_form() {
+  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány
+  $form['#attributes'] = array(</p>
+
+<pre><code>'enctype' =&gt; "multipart/form-data"
+</code></pre>
+
+<p>  );</p>
+
+<p>  $form['file_upload'] = array(</p>
+
+<pre><code>'#type' =&gt; 'file',
+'#title' =&gt; t('Filename'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  $form['submit'] = array(</p>
+
+<pre><code>'#type' =&gt; 'submit',
+'#value' =&gt; t('Upload file'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  return $form;
+}
+```</p>
+
+<p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):
+```phpinline
+function mymodule_upload_form_submit($form_id, $form_values) {
+  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés<br/>
+  $file = file_check_upload('file_upload');
+  if ($file){</p>
+
+<pre><code>// Ha sikeres volt elmentjük az állományt a megadott könyvtárba
+$file = file_save_upload($file, 'cél_könyvtár_útvonala');
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>Eddig sétagalopp, a neheze akkor jön amikor valamilyen feltételnek megfelelő állományt szeretnénk, ha feltöltene a felhasználó. A példában várjunk egy képet, ami nem nagyobb mint 100x100 pixel, ha nagyobb méretezzük át.</p>
+
+<p>A validációban megvizsgáljuk, hogy kép típusú-e az állomány, az átméretezést pedig megcsináljuk a sumbitkor.</p>
+
+<p>A form előállítása változatlan. Az feltöltött állomány vizsgálatát a form validate függvényben végezzük el. A submit függvényben a képet átméretezzük, ha nagyobb mint a megengedett, majd elmentjük a megadott könyvtárba.
+Validate függvény:
+```phpinline
+function mymodule_upload_form_validate($form_id, $form_values) {
+  // Itt ellenőrizzük le, hogy sikeres volt-e a feltöltés<br/>
+  $file = file_check_upload('file_upload');</p>
+
+<p>  // Létezik-e a feltöltött állomány
+  if ( isset($file->filepath) ) {</p>
+
+<pre><code>// Megnézzük, hogy kép-e
+$info = image_get_info($file-&gt;filepath);
+if (!$info || !$info['extension']) {
+  form_set_error('file_upload', t('The uploaded file was not an image.'));
+}
+</code></pre>
+
+<p>}
+<code>
+Submit függvény:
+</code>phpinline
+function mymodule_upload_form_submit($form_id, $form_values) {
+  // Ellenőrizzük le, hogy sikeres volt-e a feltöltés<br/>
+  $file = file_check_upload('file_upload');</p>
+
+<p>  // Létezik-e a feltöltött állomány
+  if ( isset($file->filepath) ) {</p>
+
+<pre><code>// Kép méret ellenőrzése
+list($maxwidth, $maxheight) = explode('x', '100x100');
+if ($info['width'] &gt; $maxwidth || $info['height'] &gt; $maxheight) {
+  // Átméretezés
+  image_scale($file-&gt;filepath, $file-&gt;filepath, $maxwidth, $maxheight);
+  // Informáljuk a felhasználót az eseményről.
+  drupal_set_message(t('The image was resized to fit within the maximum allowed dimensions of %dimensions pixels.', array('%dimensions' =&gt; '100x100'));
+}
+
+// Állomány elmentése a megadott helyre.
+$file = file_save_upload($file, 'cél_könyvtár_útvonala');
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>Aki ismeri a drupal 6 állomány kezelését az tudja, hogy ott már adatbázisban tárolja le az állományok adatait. Adatbázis drupal 5-ben is rendelkezésre áll csak kicsit más a szerkezete, és picit más célokra szolgál. Mi magunk is írhatunk az adatbázisba, ha szeretnénk ott is tárolni az állományaink adatait. Arra azonban figyeljünk, hogy az ötös verzióban magunknak kell gondoskodni az állományok törléséről mind a lemezről mind az adatbázisból (ha használjuk).</p>
+
+<p>Nézzük, hogy kell állományt feltölteni drupal 6 alatt.</p>
+
+<h2><a name="drupal_6">Drupal 6</a></h2>
+
+<p> Hozzuk létre a form függvényünket a következőképp:
+```phpinline
+function mymodule_upload_form() {
+  // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány
+  $form['#attributes'] = array(</p>
+
+<pre><code>'enctype' =&gt; "multipart/form-data"
+</code></pre>
+
+<p>  );</p>
+
+<p>  $form['file_upload'] = array(</p>
+
+<pre><code>'#type' =&gt; 'file',
+'#title' =&gt; t('Filename'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  $form['submit'] = array(</p>
+
+<pre><code>'#type' =&gt; 'submit',
+'#value' =&gt; t('Upload file'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  return $form;
+}
+```</p>
+
+<p>Tároljuk le a feltöltött állományt a form submit kampójában (hook):
+```phpinline
+function mymodule_upload_form_submit($form_id, $form_values) {
+  //Állomány feltöltése
+  if ( $file = file_save_upload('file_upload', array(), 'cél_könyvtár_útvonala' ) ) {</p>
+
+<pre><code>//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.
+file_set_status($file, FILE_STATUS_PERMANENT);
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>Készítsük el a fenti példa drupal 6-os változatát. A feladat várjunk egy képet, ami nem nagyobb mint 100x100 pixel, ha nagyobb méretezzük át.
+Ebben az esetben nem kell validate függvényt írnunk, mert egy lépésben megtehetjük a submit részben.
+```phpinline
+function mymodule_upload_form_submit($form_id, $form_values) {
+  //Az feltöltött állomány validációs feltételei.
+  $validators = array(</p>
+
+<pre><code>'file_validate_is_image' =&gt; array(),
+'file_validate_image_resolution' =&gt; array('100x100'),
+</code></pre>
+
+<p>  );</p>
+
+<p>  //Állomány feltöltése, validációval
+  if ( $file = file_save_upload('file_upload', $validators, 'cél_könyvtár_útvonala' ) ) {</p>
+
+<pre><code>//Státusz beállítása véglegesre, ha nem tesszük meg akkor egy idő után törli a drupal az állományunk.
+file_set_status($file, FILE_STATUS_PERMANENT);
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>A <a href="http://api.drupal.org/api/function/file_save_upload">file_save_upload</a> függvényről az <a href="http://api.drupal.org">http://api.drupal.org</a> oldalon van részletesebb leírás.</p>
+
+<p>Felhasznált források:</p>
+
+<ul>
+<li><a href="http://www.computerminds.co.uk/example-code-build-upload-form-drupal">http://www.computerminds.co.uk/example-code-build-upload-form-drupal</a></li>
+<li><a href="http://groups.drupal.org/node/4308">http://groups.drupal.org/node/4308</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Xdebug with MAMP and Acquia Drupal Stack]]></title>
+    <link href="http://ilo.hu/using-xdebug-with-mamp-and-acquia-drupal-stack/"/>
+    <updated>2009-11-20T17:21:48+01:00</updated>
+    <id>http://ilo.hu/using-xdebug-with-mamp-and-acquia-drupal-stack</id>
+    <content type="html"><![CDATA[<p>Recently I have switched from Linux to OS X.
+In order to continue my job effectively I had to set up a proper development environment.
+For programming tasks I prefer the <a href="http://www.netbeans.org">NetBeans IDE</a>, which is available for OS X.
+I have not yet decided about the server side, so currently I'm testing two alternatives. Those are <a href="http://www.mamp.info">MAMP</a> and the <a href="http://acquia.com">Acquia Drupal Stack</a> which is a great help for Drupal development.
+I picked Acquia Drupal Stack because most of my tasks are Drupal related and this tool can save me a lot of time.
+You can watch Gabor Hojtsy's presentation on Acquia Drupal Stack at DrupalCamp Hungary: <a href="http://csecsy.hu/boobaa_blogja/hojtsy_gabor_telepites_es_menedzseles_az_acquia_stack_installer_segitsegevel_drupal_hetvege_2009_7_resz">here</a>.</p>
+
+<!-- more -->
+
+
+<p>Download and install as usual:</p>
+
+<ul>
+<li>NetBeans: <a href="http://netbeans.org/downloads/indexC.html">http://netbeans.org/downloads/indexC.html</a></li>
+<li>MAMP: <a href="http://www.mamp.info/en/downloads/index.html">http://www.mamp.info/en/downloads/index.html</a></li>
+<li>Acquia Drupal Stack: <a href="http://acquia.com/downloads/mac-installer">http://acquia.com/downloads/mac-installer</a></li>
+</ul>
+
+
+<p>As a last step you need to install Xdebug.</p>
+
+<h2>Enabling Xdebug in MAMP</h2>
+
+<p>Fortunately MAMP contains a pre-compiled xdebug.so file, so you only need to enable it in php.ini. At the same time make sure that Zend optimizer is disabled because it does not work together with Xdebug.
+Edit php.ini using your favorite text editor:
+<code>bash
+nano /Applications/MAMP/conf/php5/php.ini
+</code>
+Change the end of the file to this:
+```ini
+;[Zend]
+;zend_optimizer.optimization_level=15
+;zend_extension_manager.optimizer=/Applications/MAMP/bin/php5/zend/lib/Optimizer-3.3.3
+;zend_optimizer.version=3.3.3</p>
+
+<p>;zend_extension=/Applications/MAMP/bin/php5/zend/lib/ZendExtensionManager.so</p>
+
+<p>[xdebug]</p>
+
+<p>xdebug.default_enable=1</p>
+
+<p>xdebug.remote_enable=1
+xdebug.remote_handler=dbgp
+xdebug.remote_host=localhost
+xdebug.remote_port=9000
+xdebug.remote_autostart=1</p>
+
+<p>zend_extension="/Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so"
+```</p>
+
+<p>Restart MAMP and check phpinfo()'s output. If you see the following lines then you've successfully enabled Xdebug.
+<img src="/images/i/MAMP_phpinfo_xdebug.jpg" alt="MAMP phpinfo xdebug" /></p>
+
+<h2>Enabling Xdebug in Acquia Drupal Stack</h2>
+
+<p>Acquia Drupal Stack doesn't contain a pre-compiled xdebug.so file, so you have two choices. Either you compile it from source or use MAMP's pre-compiled xdebug.so file. I chose the latter one. (Note: MAMP ships with php 5.2.11, whilst Acquia Drupal Stack uses version 5.2.9.)</p>
+
+<p>Copy xdebug.so from MAMP to Acquia Drupal Stack:
+<code>bash
+cd /Applications/acquia-drupal/php/ext/
+cp /Applications/MAMP/bin/php5/lib/php/extensions/no-debug-non-zts-20060613/xdebug.so .
+</code></p>
+
+<p>Open php.ini using your favorite text editor:
+<code>bash
+nano /Applications/acquia-drupal/php/bin/php.ini
+</code></p>
+
+<p>Add the following lines to the end:
+```ini
+[xdebug]</p>
+
+<p>xdebug.default_enable=1</p>
+
+<p>xdebug.remote_enable=1
+xdebug.remote_handler=dbgp
+xdebug.remote_host=localhost
+xdebug.remote_port=9080
+xdebug.remote_autostart=1</p>
+
+<p>zend_extension=/Applications/acquia-drupal/php/ext/xdebug.so
+```
+In this example Xdebug is using port 9080, which is needed to make sure that MAMP and Acquia Drupal Stack don't use the same port.
+If you are not going to use them simultaneously then port 9000 is also fine here.</p>
+
+<p>You can use phpinfo() from Acquia Drupal Stack's settings:
+<img src="/images/i/Acquia_Settings.jpg" alt="Acquia Settings" /></p>
+
+<p>If you see the following then you've successfully enabled Xdebug:
+<img src="/images/i/Acquia_phpinfo_xdebug.jpg" alt="Acquia phpinfo xdebug" /></p>
+
+<h2>Real time debugging with NetBeans</h2>
+
+<p>Below you can see the settings for PHP debugging in MAMP environment:
+<img src="/images/i/NetBeans_xdebug.jpg" alt="NetBeans xdebug" /></p>
+
+<p>If you use Acquia Drupal Stack, change PHP 5 Interpreter and Debugger Port settings respectively.
+<code>
+PHP 5 Interpreter: /Applications/acquia-drupal/php/bin/php
+Debugger Port: 9080
+</code></p>
+
+<p>Web browser settings should look like this way:</p>
+
+<p><img src="/images/i/NetBeans_Browser_Options.jpg" alt="NetBeans Browser Options" /></p>
+
+<p><img src="/images/i/NetBeans_Settings_Web_Browsers.jpg" alt="NetBeans Settings Web Browsers" /></p>
+
+<p>Now you only need to set a break point and start debugging.</p>
+
+<p>I would like to thank <a href="http://itarato.blogspot.com/">itarato</a> and <a href="http://zserno.blogspot.com/">zserno</a> for their help in writing this article.
+This article was translated to English by <a href="http://zserno.blogspot.com/">zserno</a>. For the original hungarian article click <a href="http://openproject.hu/blog/york/mamp-es-acquia-drupal-stack-felruhazasa-xdebug-kepesseggel">here</a>.</p>
+
+<p>References:</p>
+
+<ul>
+<li><a href="http://debuggable.com/posts/setting-up-xdebug-on-mac-os-x-or-win32-linux:480f4dd6-0240-4a90-8fa1-4e41cbdd56cb">http://debuggable.com/posts/setting-up-xdebug-on-mac-os-x-or-win32-linux:480f4dd6-0240-4a90-8fa1-4e41cbdd56cb</a></li>
+<li><a href="http://robshouse.net/article/xdebug-komodo-and-acquia-drupal-stack-installer">http://robshouse.net/article/xdebug-komodo-and-acquia-drupal-stack-installer</a></li>
+</ul>
+
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Drupal 6 | Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/categories/drupal-6/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2012-11-29T21:50:04+01:00</updated>
+  <updated>2013-02-21T09:00:48+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -191,7 +191,7 @@ $file = file_save_upload($file, 'cél_könyvtár_útvonala');
 
 <h2><a name="drupal_6">Drupal 6</a></h2>
 
-<p>Hozzuk létre a form függvényünket a következő kép:
+<p> Hozzuk létre a form függvényünket a következőképp:
 ```phpinline
 function mymodule_upload_form() {
   // Ezt a sort ne felejtsük el megadni, mert ennek hiányában nem töltődik fel az állomány

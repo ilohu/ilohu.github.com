@@ -4,7 +4,7 @@
   <title><![CDATA[Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2012-11-29T21:50:04+01:00</updated>
+  <updated>2013-02-21T09:00:48+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -807,7 +807,7 @@ Validate függvény:</p>
 
 <h2><a name="drupal_6">Drupal 6</a></h2>
 
-<p>Hozzuk létre a form függvényünket a következő kép:</p>
+<p> Hozzuk létre a form függvényünket a következőképp:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
