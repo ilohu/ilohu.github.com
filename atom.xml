@@ -4,7 +4,7 @@
   <title><![CDATA[Drupal kattintgatás nélkül]]></title>
   <link href="http://ilo.hu/atom.xml" rel="self"/>
   <link href="http://ilo.hu/"/>
-  <updated>2013-02-21T09:45:55+01:00</updated>
+  <updated>2013-02-27T07:54:41+01:00</updated>
   <id>http://ilo.hu/</id>
   <author>
     <name><![CDATA[York]]></name>
@@ -14,11 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Hombrew telepítése - DFK#1]]></title>
-    <link href="http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1/"/>
+    <title type="html"><![CDATA[Homebrew telepítése - DFK#1]]></title>
+    <link href="http://ilo.hu/homebrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1/"/>
     <updated>2013-02-21T07:59:00+01:00</updated>
-    <id>http://ilo.hu/hombrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1</id>
-    <content type="html"><![CDATA[<p>A Drupal fejlesztői környezet (DFK) kialakítása sorozat első felében a parancssoros környezetem kialakítását mutatom be. Ebben a postban a hombrew telepítéséről lesz szó.</p>
+    <id>http://ilo.hu/homebrew-telepites-drupal-fejlesztoi-kornyezet-kialakitasa-1</id>
+    <content type="html"><![CDATA[<p>A Drupal fejlesztői környezet (DFK) kialakítása sorozat első felében a parancssoros környezetem kialakítását mutatom be. Ebben a postban a homebrew telepítéséről lesz szó.</p>
 
 <!-- more -->
 
